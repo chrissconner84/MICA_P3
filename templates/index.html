@@ -12,7 +12,7 @@
   <div class="container">
   
   <div class="row">
-    <h2>Trending YouTube Dashboard</h2>
+    <h1>Dashboard</h1>
   </div>
   
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -27,79 +27,56 @@
           <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="user_eng.html">User Engagement</a>
+          <a class="nav-link" href="user_eng.html">Visualizations</a>
         </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Date Select
-          </a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href="#">Action</a>
-            <a class="dropdown-item" href="#">Another action</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">Something else here</a>
-          </div>
-        </li>
-        <!-- <li class="nav-item">
-          <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a> -->
+        <li class="nav-item">
+          <a class="nav-link" href="world_map.html">World Map</a>
         </li>
       </ul>
-      <form class="form-inline my-2 my-lg-0">
-        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-      </form>
-    </div>
+      </div>
   </nav>
-  <div class="col-md-2">
-    <div class="well">
-      <h5>Select Video category to see data:</h5>
-      <select id="selDataset" onchange="optionChanged(this.value)">
-      </select>
-    </div>
-    <div class="panel panel-primary">
-      <div class="panel-heading">
-      </div>
-      <div id="sample-metadata" class="panel-body"></div>
-      </div>
-  </div>
-  
-  
+    
   <div class="container">
     <div class="row">
       <div class="col-md-4">
-        <a class="btn btn-primary btn-lg" href="/scrape" role="button">Scrape New Data!</a>
-        <h3>Top 5 Videos</h3>
-        <h2 class="heading"> Title: ({{dictionary["trends"][0]["title"]}})</h2>
+        <a class="btn btn-primary btn-lg" href="/scrape" role="button">Get Top 5 Videos of day</a><br>
+        
+        <h8 class="heading"> Title: ({{dictionary["trends"][0]["title"]}})</h8>
         <p>Summary: ({{dictionary["trends"][0]["summary"]}})</p>
         <p>Video Link: ({{dictionary["trends"][0]["video_link"]}})</p>
 
-        <h2 class="heading"> Title: ({{dictionary["trends"][1]["title"]}})</h2>
+        <h8 class="heading"> Title: ({{dictionary["trends"][1]["title"]}})</h8>
         <p>Summary: ({{dictionary["trends"][1]["summary"]}})</p>
         <p>Video Link: ({{dictionary["trends"][1]["video_link"]}})</p>
 
-        <h2 class="heading"> Title: ({{dictionary["trends"][2]["title"]}})</h2>
+        <h8 class="heading"> Title: ({{dictionary["trends"][2]["title"]}})</h8>
         <p>Summary: ({{dictionary["trends"][2]["summary"]}})</p>
         <p>Video Link: ({{dictionary["trends"][2]["video_link"]}})</p>
 
-        <h2 class="heading"> Title: ({{dictionary["trends"][3]["title"]}})</h2>
+        <h8 class="heading"> Title: ({{dictionary["trends"][3]["title"]}})</h8>
         <p>Summary: ({{dictionary["trends"][3]["summary"]}})</p>
         <p>Video Link: ({{dictionary["trends"][3]["video_link"]}})</p>
 
-        <h2 class="heading"> Title: ({{dictionary["trends"][4]["title"]}})</h2>
+        <h8 class="heading"> Title: ({{dictionary["trends"][4]["title"]}})</h8>
         <p>Summary: ({{dictionary["trends"][4]["summary"]}})</p>
         <p>Video Link: ({{dictionary["trends"][4]["video_link"]}})</p>
-        
-        <!-- <img src="./Resources/assets/images/Fig1.png" class="img-fluid" alt="Responsive image" width="400" height="400"> -->
+               
       </div>
       <div class="col-md-4">
         <h3>Visualizations</h3>
         <div class="card" style="width: 18rem;">
-           <img src="./Resources/YouTube-White-Full-Color-Dark-Background-Logo.wine.svg" class="card-img-top" alt="visual">
+           <img src="../Resources/YouTube-White-Full-Color-Dark-Background-Logo.wine.svg" class="card-img-top" alt="visual">
             <div class="card-body">
-            <p class="card-text">Go to Visualizations</p>
+            <p class="card-text">By Category</p>
            </div>
+        </div>
+        <div class="card" style="width: 18rem;">
+          <img src="../Resources/YouTube-White-Full-Color-Dark-Background-Logo.wine.svg" class="card-img-top" alt="visual">
+           <div class="card-body">
+           <p class="card-text">By Country</p>
           </div>
-        </div>  
+        </div>
+      </div>  
       <div class="col-md-4">  
         <h3>Streaming Videos by Country</h3>
         <select id="selDataset">
@@ -116,35 +93,25 @@
           <option value="canada">India</option>
 
         </select>
+        <a href="#"><img src="../Resources/Countries1.jpg" class="img-responsive" alt="World Map"></a>
+        <div class="well">
+            <h3>Select Video category:</h3>
+            <select id="selDataset" onchange="optionChanged(this.value)">
+            </select>
+          </div>
+          <div class="panel panel-primary">
+            <div class="panel-heading">
+            </div>
+            <div id="sample-metadata" class="panel-body"></div>
+          </div>
+        </div>
+        <div><title>Pie Chart</title>
+          <div id="pie"></div>
+          <script src="./static/js/pc.js"></script>
+        </div>   
       </div>
+  </div>    
       
-  
-      <div id="pie"></div>
-  
-      <!--<script src="data.js"></script>-->
-      <!--<script src="plots.js"></script>-->
-  <div class="container">
-    
-
-    <!--These col-md-3 columns go half wide when on a small screen and full on extra small-->
-    <!-- <div class="row">
-      <div class="col-sm-6 col-md-3">
-        <div class="box purple">col-sm-6 col-md-3</div>
-      </div>
-      <div class="col-sm-6 col-md-3">
-        <div class="box purple">col-sm-6 col-md-3</div>
-      </div>
-    </div> -->
-<!--
-    These are full wide on a medium screen, half wide on a small screen, 1/4 wide on an extra small screen-->
-    <!-- <div class="row">
-      <div class="col-3 col-sm-6 col-md-12">
-        <div class="box red">col-xs-3 col-sm-6 col-md-12</div>
-      </div>
-      <div class="col-3 col-sm-6 col-md-12">
-        <div class="box red">col-xs-3 col-sm-6 col-md-12</div>
-      </div>
-    </div> -->
 
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
