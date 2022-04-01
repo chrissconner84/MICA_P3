@@ -26,9 +26,10 @@ engine = create_engine(connection_string)
 @app.route("/")
 def index():
     # dictionary = mongo.db.dictionary.find_one()
-
-#    return render_template("index.html", df=df.to_json(orient="records"))
-    return render_template('test.html')
+    first_10=engine.execute("select * from all_data where country = 'United States' limit 10000").all()
+   # df = pd.read_sql("Select * from all_data", con=engine)
+    return render_template("index.html", data=first_10)
+    # return render_template('test.html')
 
 @app.route("/scrape")
 def scraper():

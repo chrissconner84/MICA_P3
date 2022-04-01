@@ -1,5 +1,39 @@
 const path = "./Resources/US_category_id.json";
 
+// how to call an API from javascript. Can also use D3 to load the url below
+let request =new XMLHttpRequest();
+request.open("GET", "http://127.0.0.1:5000/api/country" )
+request.send();
+request.onload = () => {
+  console.log(request)
+  if (request.status == 200)
+  {
+    // console.log(JSON.parse(request.response))
+  }
+  else{
+    console.log("error")
+  }
+}
+   
+// Trace for the Roman Data
+console.log("s1=", s1)
+// let trace1 = {
+//     x: s1.map(row => row.catnodes),
+//     y: s1.map(row => row.likes),
+//     type: "bar"
+// };
+
+// // Data trace array
+// let traceData = [trace1];
+
+// // Apply title to the layout
+// let layout = {
+//   title: "Likes vs Category ID"
+// };
+
+// // Render the plot to the div tag with id "plot"
+// Plotly.newPlot("plot", traceData, layout);
+
 // Promise Pending
 const dataPromise = d3.json(path);
 console.log("Data Promise: ", dataPromise);
