@@ -20,7 +20,30 @@ app = Flask(__name__)
 
 connection_string = f"postgresql://{db_user}:{db_password}@{endpoint}:5432/{db_name}"
 engine = create_engine(connection_string)
-df = pd.read_sql("Select * from all_data", con=engine)
+
+
+
+"""
+Create dataframes here; only runs when Flask starts or resets
+"""
+
+raw_value_counts = engine.execute("""
+                        Select country, count(*) 
+                        from all_data
+                        group by country""", con=engine)
+value_counts_df = pd.DataFrame(raw_value_counts, columns = raw_value_counts._metadata.keys)
+
+# You can use test_all_df like main_df in jpytr; feel free to rename
+test_all = engine.execute("SELECT * FROM all_data")
+test_all_df = pd.DataFrame(test_all, columns=test_all._metadata.keys)
+
+test_avg_view = test_all_df.groupby("country").mean()
+
+"""
+Routes used to send data to d3.json; make sure to send as json format
+
+Also you can use pd.to_json() instead of JSONify but it's not as easy to use with plotly
+"""
 
 @app.route("/")
 def index():
@@ -35,19 +58,21 @@ def scraper():
     dictionary.update_one({}, {"$set": dictionary_data}, upsert=True)
     return redirect("/", code=302)
 
-@app.route("/api/all_data")
+@app.route("/api/test")
 def get_all():
-    # [{},{},{}]
-    # {k:v,k:v} -> [[k,v],[k,v],[k,v]]
-    res = [{k:v for k, v in row.items()} for i, row in df.iterrows()]
+    res = [{k:v for k, v in row.items()} for i, row in value_counts_df.iterrows()]
     return jsonify(response=res)
 
+# Returns [{}, {},]
+@app.route("/api/test_avg_view")
+def test_avg_view_route():
+    res = [{k:v for k, v in row.items()} for i, row in test_avg_view.iterrows()]
+    return jsonify(response=res)
+
+# Returns ["Canada", .....]
 @app.route("/api/country")
 def get_country():
-    # [{},{},{}]
-    # {k:v,k:v} -> [[k,v],[k,v],[k,v]]
-
-    return jsonify(response=list(df['country'].unique()))
+    return jsonify(response=list(test_all_df['country'].unique()))
 
 
 if __name__ == "__main__":
