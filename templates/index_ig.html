@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Trending YouTube Videos</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <div class="container">
+  
+  <div class="row">
+    <h1>Dashboard</h1>
+  </div>
+  
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">MICA Team</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="user_eng.html">Visualizations</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="world_map">World Map</a>
+        </li>
+      </ul>
+      </div>
+  </nav>
+    
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4">
+        <a class="btn btn-primary btn-lg" href="/scrape" role="button">Get Top 5 Videos of day</a><br>
+
+      </div>
+      <div class="col-md-4">
+        <h3>Visualizations</h3>
+        <div class="card" style="width: 18rem;">
+           <img src="../Resources/YouTube-White-Full-Color-Dark-Background-Logo.wine.svg" class="card-img-top" alt="visual">
+            <div class="card-body">
+            <p class="card-text">By Category</p>
+           </div>
+        </div>
+        <div class="card" style="width: 18rem;">
+          <img src="../Resources/YouTube-White-Full-Color-Dark-Background-Logo.wine.svg" class="card-img-top" alt="visual">
+           <div class="card-body">
+           <p class="card-text">By Country</p>
+          </div>
+        </div>
+      </div>  
+      <div class="col-md-4">  
+        <h3>Streaming Videos by Country</h3>
+        <select id="selDataset">
+        <!-- GET THESE THRU js -->
+          <option value="us">United States</option>
+          <option value="uk">Great Britain</option>
+          <option value="canada">Canada</option>
+          <option value="canada">Mexico</option>
+          <option value="canada">Japan</option>
+          <option value="canada">South Korea</option>
+          <option value="canada">Denmark</option>
+          <option value="canada">France</option>
+          <option value="canada">Russia</option>
+          <option value="canada">India</option>
+
+        </select>
+        <a href="#"><img src="../Resources/Countries1.jpg" class="img-responsive" alt="World Map"></a>
+        <div class="well">
+            <h3>Select Video category:</h3>
+            <select id="selDataset" onchange="optionChanged(this.value)">
+            </select>
+          </div>
+          <div class="panel panel-primary">
+            <div class="panel-heading">
+            </div>
+            <div id="sample-metadata" class="panel-body"></div>
+          </div>
+        </div>
+        <div><title>Pie Chart</title>
+          <div id="pie"></div>
+          <script src="./static/js/pc.js"></script>
+        </div>   
+      </div>
+  </div>    
+      
+
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  <script src="https://d3js.org/d3.v5.min.js"></script>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <script src="./static/js/app.js"></script>
+  
+
+</body>
+</html>
