@@ -1,11 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "base.html" %}
+{% block title %}World Map {% endblock %}
 
-<head>
-  <meta charset="UTF-8">
-  <title>Trending YouTube Videos</title>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-  <link rel="stylesheet" href="style.css">
+{%block content%}
 
   <!-- Leaflet CSS -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
@@ -21,41 +17,28 @@
 </head>
 
 <body>
-    
   <div class="container">
-  <div class="row">
     <h1>World Map</h1>
-  </div>
-   
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">MICA Team</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item active">
-          <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
-        </li>
-        <li class="nav-item">
-          <li class="nav-item">
-            <a class="nav-link" href="user_eng.html">Visualizations</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="world_map.html">World Map</a>
-          </li>
-      </ul>
-    </div>
-  </nav>
-  
-  <div id="map" style="width: 900px; height: 700px;"></div>
+    <div class="row justify-content-start">
+      <div class="col-md-10"></div>
+       <div id="map" style="width: 800px; height: 600px;"></div> 
+      
+      <div class="col-2">
+        <select id="selDataset">
+          {% for x in countries %}
+          <option>{{x}}</option>
+          {% endfor %}
+          </select> 
+      </div>
+     </div>
+  </div>   
 
   <!-- Leaflet JavaScript code -->
   <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
     integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
     crossorigin=""></script>
   <script type="text/javascript" src="../static/js/mapscript.js"></script>
-
+  <script type="text/javascript" src="../static/js/chris.js"></script>
+  {%endblock%}  
 </body>
 </html>

@@ -1,12 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "base.html" %}
+{% block title %}User Engagement{% endblock %}
 
-<head>
-  <meta charset="UTF-8">
-  <title>Trending YouTube Videos</title>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-  <link rel="stylesheet" href="style.css">
-</head>
+{%block content%}
+
 
 <body>
   <div class="container">
@@ -14,27 +10,6 @@
     <h1>Visualizations</h1>
   </div>
    
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">MICA Team</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item active">
-          <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="user_eng.html">Visualizations</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="world_map.html">World Map</a>
-        </li>
-      </ul>
-    </div>
-  </nav>
-  
   <div class="container">
     <div class="row">
       <div class="col-md-12">
@@ -49,7 +24,7 @@
     <div class="row">
       <div class="col-md-3"> 
         <div class="card" style="width: 18rem;">
-         <img src="../Resources/YouTube-White-Full-Color-Dark-Background-Logo.wine.svg" class="card-img-top" alt="visual">
+         <img src="../Resources/youtube-logo.png" class="card-img-top" alt="visual">
           <div class="card-body">
           <p class="card-text">1st visual</p>
          </div>
@@ -57,7 +32,7 @@
       </div>
       <div class="col-md-3"> 
         <div class="card" style="width: 18rem;">
-         <img src="../Resources/YouTube-White-Full-Color-Dark-Background-Logo.wine.svg" class="card-img-top" alt="visual">
+         <img src="../Resources/youtube-logo.png" class="card-img-top" alt="visual">
           <div class="card-body">
           <p class="card-text">2nd visual</p>
          </div>
@@ -65,7 +40,7 @@
       </div>
       <div class="col-md-3"> 
         <div class="card" style="width: 18rem;">
-         <img src="../Resources/YouTube-White-Full-Color-Dark-Background-Logo.wine.svg" class="card-img-top" alt="visual">
+         <img src="../Resources/youtube-logo.png" class="card-img-top" alt="visual">
           <div class="card-body">
           <p class="card-text">3rd visual</p>
          </div>
@@ -73,7 +48,7 @@
       </div>
       <div class="col-md-3"> 
         <div class="card" style="width: 18rem;">
-         <img src="../Resources/YouTube-White-Full-Color-Dark-Background-Logo.wine.svg" class="card-img-top" alt="visual">
+         <img src="../Resources/youtube-logo.png" class="card-img-top" alt="visual">
           <div class="card-body">
           <p class="card-text">4th visual</p>
          </div>
@@ -92,7 +67,7 @@
     </div>      
   </div>  
   
-     
+  {%endblock%}   
  
     
 
