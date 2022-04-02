@@ -23,8 +23,8 @@ d3.json("/api/country").then(test_data => {
 })
 
 // 
-d3.json("/api/test_avg_view").then(view_data => {
-    var likesList = view_data.response.map(country => country.likes)
+d3.json("/api/cat_codes_likes_agg").then(view_data => {
+    var likesList = view_data.response.map(cat_codes => cat_codes.likes)
 
     console.log(likesList);
 })
