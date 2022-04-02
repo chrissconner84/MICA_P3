@@ -6,16 +6,19 @@
   <div class="container">
   <div class="row">
     <h1>Dashboard</h1>
+    </div>
   </div>
       
   <div class="container">
     <div class="row">
       <div class="col-md-4">
         <a class="btn btn-primary btn-lg" href="/scrape" role="button">Get Top 5 Videos of day</a><br>
-
       </div>
       <div class="col-md-4">
         <h3>Visualizations</h3>
+        <!-- <div><title>Bar Chart</title>
+          <div id="bar"></div>
+        </div> -->
         <div class="card" style="width: 18rem;">
            <img src=".\static\js\worldmap.jpg" class="card-img-top" alt="visual">
             <div class="card-body">
@@ -38,20 +41,21 @@
             {% endfor %}
             </select>    
         
-       <a href="#"><img src=".\static\js\worldmap.jpg" class="img-responsive" alt="World Map"/></a> 
+            <a href="#"><img src=".\static\js\worldmap.jpg" class="img-responsive" alt="World Map"/></a> 
         
-        <h3>Select Video category:</h3>
-        <select id="selDataset">
+            <h3>Select Video category:</h3>
+            <select id="selDataset">
               {% for x in all_cat_codes %}
               <option>{{x}}</option>
               {% endfor %}
+            </select>
           </div>
+     </div>
      </div>
     <div class="row">
       <div class="col-md-8"> 
-        <div><title>Pie Chart</title>
-          <div id="pie"></div>
-        </div>
+        <h3>Bar Chart</h3>
+          <div id="bar1"></div>
       </div>         
     </div>
   </div>    
