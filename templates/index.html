@@ -17,13 +17,13 @@
       <div class="col-md-4">
         <h3>Visualizations</h3>
         <div class="card" style="width: 18rem;">
-           <img src="../images/youtube-logo.png" class="card-img-top" alt="visual">
+           <img src=".\static\js\worldmap.jpg" class="card-img-top" alt="visual">
             <div class="card-body">
             <p class="card-text">By Category</p>
            </div>
         </div>
         <div class="card" style="width: 18rem;">
-          <img src="../images/youtube-logo.png" class="card-img-top" alt="visual">
+          <img src=".\static\you-tube-logo.jpg" class="card-img-top" alt="visual">
            <div class="card-body">
            <p class="card-text">By Country</p>
           </div>
@@ -31,25 +31,20 @@
       </div>  
       <div class="col-md-4">  
         <h3>Streaming Videos by Country</h3>
-        <select id="selDataset">
-        <!-- GET THESE THRU js -->
-          <option value="us">United States</option>
-          <option value="uk">Great Britain</option>
-          <option value="canada">Canada</option>
-          <option value="canada">Mexico</option>
-          <option value="canada">Japan</option>
-          <option value="canada">South Korea</option>
-          <option value="canada">Denmark</option>
-          <option value="canada">France</option>
-          <option value="canada">Russia</option>
-          <option value="canada">India</option>
-        </select>    
+        <div class="col-2">
+          <select id="selDataset">
+            {% for x in countries %}
+            <option>{{x}}</option>
+            {% endfor %}
+            </select>    
         
-       <a href="#"><img src="../images/worldmap.jpg"/></a> <!--## class="img-responsive" alt="World Map"--> 
-        <div class="well">
-            <h3>Select Video category:</h3>
-            <select id="selDataset" onchange="optionChanged(this.value)">
-            </select>
+       <a href="#"><img src=".\static\js\worldmap.jpg" class="img-responsive" alt="World Map"/></a> 
+        
+        <h3>Select Video category:</h3>
+        <select id="selDataset">
+              {% for x in all_cat_codes %}
+              <option>{{x}}</option>
+              {% endfor %}
           </div>
      </div>
     <div class="row">
