@@ -12,8 +12,6 @@ import time
 
 from splinter import Browser
 from webdriver_manager.chrome import ChromeDriverManager
-executable_path = {'executable_path': ChromeDriverManager().install()}
-browser = Browser('chrome', **executable_path, headless=False)
 def scrape():
     executable_path = {'executable_path': ChromeDriverManager().install()}
     browser = Browser('chrome', **executable_path, headless=False)
