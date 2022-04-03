@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+{% block title %}Trending YouTube Videos {% endblock %}
+
+{%block content%}
+<body>
+  <div class="container">
+  <div class="row">
+    <h1>Dashboard</h1>
+    </div>
+  </div>
+      
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4">
+        <a class="btn btn-primary btn-lg" href="/scrape" role="button">Get Top 5 Videos of day</a><br>
+        <table border = "1" cellpadding = "5" cellspacing = "5" font :"8px">
+          <tr>
+            <th>Title</th>
+            <th>Summary</th>
+            <th>Video Link</th>
+          </tr>
+          <tr>
+            <td>{{trending_videos["trends"][0]["title"]}}</td>
+            <td>{{trending_videos["trends"][0]["summary"]}}</td>
+            <td>{{trending_videos["trends"][0]["video_link"]}}</td>
+          </tr>
+          <tr>
+            <td>{{trending_videos["trends"][1]["title"]}}</td>
+            <td>{{trending_videos["trends"][1]["summary"]}}</td>
+            <td>{{trending_videos["trends"][1]["video_link"]}}</td>
+          </tr>
+          <tr>
+            <td>{{trending_videos["trends"][2]["title"]}}</td>
+            <td>{{trending_videos["trends"][2]["summary"]}}</td>
+            <td>{{trending_videos["trends"][2]["video_link"]}}</td>
+          </tr>
+          <tr>
+            <td>{{trending_videos["trends"][3]["title"]}}</td>
+            <td>{{trending_videos["trends"][3]["summary"]}}</td>
+            <td>{{trending_videos["trends"][3]["video_link"]}}</td>
+          </tr>
+          <tr>
+            <td>{{trending_videos["trends"][4]["title"]}}</td>
+            <td>{{trending_videos["trends"][4]["summary"]}}</td>
+            <td>{{trending_videos["trends"][4]["video_link"]}}</td>
+          </tr>
+        </table>
+      </div>
+      <div class="col-md-4"> 
+        <h3>Total Days Trending</h3>
+          <div id="bar1"></div>
+      </div>       
+      <div class="col-md-4"> 
+        <h3>Total Views</h3>
+          <div id="bar2"></div>
+      </div>  
+      <!-- <div class="col-md-8"> -->
+
+        <!-- <div><title>Bar Chart</title>
+          <div id="bar"></div>
+        </div> -->
+        <!-- <div class="card" style="width: 18rem;">
+           <img src=".\static\js\worldmap.jpg" class="card-img-top" alt="visual">
+            <div class="card-body">
+            <p class="card-text">By Category</p>
+           </div>
+        </div> -->
+        <!-- <div class="card" style="width: 18rem;">
+          <img src=".\static\you-tube-logo.jpg" class="card-img-top" alt="visual">
+           <div class="card-body">
+           <p class="card-text">By Country</p>
+          </div>
+        </div> -->
+      <!-- </div>   -->
+      <!-- <div class="col-md-4">  
+        <h3>Streaming Videos by Country</h3>
+        <div class="col-2">
+          <select id="selDataset">
+            {% for x in countries %}
+            <option>{{x}}</option>
+            {% endfor %}
+            </select>    
+        
+            <a href="#"><img src=".\static\js\worldmap.jpg" class="img-responsive" alt="World Map"/></a> 
+        
+            <h3>Select Video category:</h3>
+            <select id="selDataset">
+              {% for x in all_cat_codes %}
+              <option>{{x}}</option>
+              {% endfor %}
+            </select>
+          </div>
+     </div> -->
+     </div>
+    <div class="row">
+      
+    </div>
+  </div>    
+  {%endblock%}      
+</body>
+</html>
