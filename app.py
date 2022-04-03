@@ -4,7 +4,7 @@ from sqlalchemy import create_engine
 from config import db_password, db_user, db_name, endpoint
 import pandas as pd
 import json
-
+import scrape_youtube
 
 app = Flask(__name__)
 
@@ -23,7 +23,45 @@ def index():
         all_cat_df=pd.DataFrame(all_cat_codes)
         rets=(all_countries_df.to_json(orient='records'))
         ccodes=(all_cat_df.to_json(orient='records'))
-        return render_template("index.html",countries=all_countries,all_cat_codes=all_cat_codes,rets=rets,ccodes=ccodes)
+        trending_videos={
+  "trends": [
+    {
+      "summary": "All Sports Golf Battle at The Masters by Dude Perfect 13 hours ago 11 minutes, 18 seconds 2,444,072 views", 
+      "title": "\n\nAll Sports Golf Battle at The Masters\n", 
+      "video_link": "http://youtube.com/watch?v=heIKaaamvdc"
+    }, 
+    {
+      "summary": "Harry Styles - As It Was (Official Video) by Harry Styles 2 days ago 2 minutes, 46 seconds 25,955,970 views", 
+      "title": "\n\nHarry Styles - As It Was (Official Video)\n", 
+      "video_link": "http://youtube.com/watch?v=H5v3kku4y6Q"
+    }, 
+    {
+      "summary": "Anuel AA, Yailin la M\u00e1s Viral - Si Tu Me Busca (Video Oficial) by Anuel AA 2 days ago 4 minutes, 32 seconds 9,252,304 views", 
+      "title": "\n\nAnuel AA, Yailin la M\u00e1s Viral - Si Tu Me Busca (Video Oficial)\n", 
+      "video_link": "http://youtube.com/watch?v=Pc2Hl2w_7qM"
+    }, 
+    {
+      "summary": "Our Ancient Street Cat Passed Away by Safiya Nygaard 9 hours ago 20 minutes 777,236 views", 
+      "title": "\n\nOur Ancient Street Cat Passed Away\n", 
+      "video_link": "http://youtube.com/watch?v=Zad6v8ZHzdg"
+    }, 
+    {
+      "summary": "Tommy Davidson had run-in with Will Smith by FOX 5 New York 1 day ago 4 minutes, 22 seconds 1,072,097 views", 
+      "title": "\n\nTommy Davidson had run-in with Will Smith\n", 
+      "video_link": "http://youtube.com/watch?v=undSilfB3AQ"
+    }, 
+    {
+      "summary": "$150,000 Funniest Survival Games... by TommyInnit 1 day ago 20 minutes 1,586,147 views", 
+      "title": "\n\n$150,000 Funniest Survival Games...\n", 
+      "video_link": "http://youtube.com/watch?v=s9FqnrJnmDQ"
+    }, 
+    {
+      "summary": "NBA YoungBoy - 4KT BABY by YoungBoy Never Broke Again 1 day ago 2 minutes, 11 seconds 2,238,951 views", 
+      "title": "\n\nNBA YoungBoy - 4KT BABY\n", 
+      "video_link": "http://youtube.com/watch?v=1KbxOjnmvjI"
+    }
+   ]};
+        return render_template("index.html",countries=all_countries,all_cat_codes=all_cat_codes,rets=rets,ccodes=ccodes,trending_videos=trending_videos)
  
 @app.route("/world_map")
 def worldmap():
@@ -94,6 +132,14 @@ def get_countries():
     return(all_countries_df.to_json(orient='records'))
     # json=jsonify({"countries":all_countries})
     #return countries_json
+
+@app.route("/scrape")
+
+def scraper():
+    trending_videos = scrape_youtube.scrape()
+    #dictionary.update_one({}, {"$set": dictionary_data}, upsert=True)
+    print(trending_videos["trends"][0])
+    return redirect("/", code=302)
 
 if __name__ == "__main__":
     app.run(debug=True)

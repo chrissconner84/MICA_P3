@@ -1,4 +1,4 @@
-const path = "./testing";
+//const path = "./testing";
 
 // Promise Pending
 // const dataPromise = d3.json(path);
@@ -20,7 +20,7 @@ const path = "./testing";
 // })
 // };
 
-d3.json(path).then(function(data) {
+d3.json("./testing").then(function(data) {
     console.log(data);
 
     var sum_likes = d3.sum(data, function(d) { return d.likes; });
@@ -35,12 +35,12 @@ d3.json(path).then(function(data) {
     }];
   
     var layout = {
-      height: 600,
-      width: 800
+      height: 400,
+      width: 600
     };
   
     Plotly.newPlot("bar1", data, layout);
-
+    Plotly.newPlot("bar2", data, layout);
 });
 // function init() {
 //     var data = [{
