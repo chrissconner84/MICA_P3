@@ -29,9 +29,9 @@ def index():
         ccodes=(all_cat_df.to_json(orient='records'))
         # trending_videos=scrape_youtube.scrape();
         trending_videos = mongo.db.trending_videos.find_one();
-        print(trending_videos)
+        #print(trending_videos)
         if not trending_videos:
-          print(os.getcwd())
+          #print(os.getcwd())
           with open("trending_videos.json", 'r', encoding='UTF-8') as f:
             trending_videos= json.load(f)
             print(trending_videos)        
@@ -112,7 +112,7 @@ def scraper():
     trending_videos = mongo.db.trending_videos
     #Update the table and save to data base
     trending_videos.update_one({}, {"$set": trending_videos_data}, upsert=True)
-    print(trending_videos_data["trends"][0])
+    #print(trending_videos_data["trends"][0])
     # reload the root route
     return redirect("/", code=302)
 
