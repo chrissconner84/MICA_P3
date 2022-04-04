@@ -36,13 +36,11 @@ d3.json("./testing").then(function(data) {
   
     var layout = {
       height: 400,
-      width: 400
+      width: 600
     };
   
-    Plotly.newPlot("bar3", data, layout);
-    Plotly.newPlot("bar4", data, layout);
-    Plotly.newPlot("bar5", data, layout);
-    Plotly.newPlot("bar6", data, layout);
+    Plotly.newPlot("bar1", data, layout);
+    Plotly.newPlot("bar2", data, layout);
 });
 // function init() {
 //     var data = [{

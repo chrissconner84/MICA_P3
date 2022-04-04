@@ -37,3 +37,9 @@ body,
 html {
   height: 100%;
 }
+
+#bar1 {
+  width: 100px;
+  height:200px;
+
+}
