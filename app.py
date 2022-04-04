@@ -32,7 +32,7 @@ def index():
         print(trending_videos)
         if not trending_videos:
           print(os.getcwd())
-          with open('trending_videos.json', 'r', encoding='UTF-8') as f:
+          with open("trending_videos.json", 'r', encoding='UTF-8') as f:
             trending_videos= json.load(f)
             print(trending_videos)        
         return render_template("index.html",countries=all_countries,all_cat_codes=all_cat_codes,rets=rets,ccodes=ccodes,trending_videos=trending_videos)

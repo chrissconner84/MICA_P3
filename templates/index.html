@@ -2,6 +2,9 @@
 {% block title %}Trending YouTube Videos {% endblock %}
 
 {%block content%}
+<head>
+  <script src="./static/js/app.js"></script>
+</head>
 <body>
   <div class="container">
   <div class="row">
@@ -22,28 +25,27 @@
           <tr>
             <td>{{trending_videos["trends"][0]["title"]}}</td>
             <!-- <td>{{trending_videos["trends"][0]["summary"]}}</td> -->
-            <td onclick="location.href={{trending_videos["trends"][0]["video_link"]}}"><a href="{{trending_videos["trends"][0]["video_link"]}}">{{trending_videos["trends"][0]["video_link"]}}</a></td>
+            <td onclick=location.href="{{trending_videos["trends"][0]["video_link"]}}"><a href="{{trending_videos["trends"][0]["video_link"]}}">{{trending_videos["trends"][0]["video_link"]}}</a></td>
           </tr>
           <tr>
             <td>{{trending_videos["trends"][1]["title"]}}</td>
             <!-- <td>{{trending_videos["trends"][1]["summary"]}}</td> -->
-            <td onclick="location.href={{trending_videos["trends"][1]["video_link"]}}"><a href="{{trending_videos["trends"][1]["video_link"]}}">{{trending_videos["trends"][1]["video_link"]}}</a></td>
-            <td href="{{trending_videos["trends"][1]["video_link"]}}"> </td>
+            <td onclick=location.href="{{trending_videos["trends"][1]["video_link"]}}"><a href="{{trending_videos["trends"][1]["video_link"]}}">{{trending_videos["trends"][1]["video_link"]}}</a></td>
           </tr>
           <tr>
             <td>{{trending_videos["trends"][2]["title"]}}</td>
             <!-- <td>{{trending_videos["trends"][2]["summary"]}}</td> -->
-            <td onclick="location.href={{trending_videos["trends"][2]["video_link"]}}"><a href="{{trending_videos["trends"][2]["video_link"]}}">{{trending_videos["trends"][2]["video_link"]}}</a></td>
+            <td onclick=location.href="{{trending_videos["trends"][2]["video_link"]}}"><a href="{{trending_videos["trends"][2]["video_link"]}}">{{trending_videos["trends"][2]["video_link"]}}</a></td>
           </tr>
           <tr>
             <td>{{trending_videos["trends"][3]["title"]}}</td>
             <!-- <td>{{trending_videos["trends"][3]["summary"]}}</td> -->
-            <td onclick="location.href={{trending_videos["trends"][3]["video_link"]}}"><a href="{{trending_videos["trends"][3]["video_link"]}}">{{trending_videos["trends"][3]["video_link"]}}</a></td>
+            <td onclick=location.href="{{trending_videos["trends"][3]["video_link"]}}"><a href="{{trending_videos["trends"][3]["video_link"]}}">{{trending_videos["trends"][3]["video_link"]}}</a></td>
           </tr>
           <tr>
             <td>{{trending_videos["trends"][4]["title"]}}</td>
             <!-- <td>{{trending_videos["trends"][4]["summary"]}}</td> -->
-            <td onclick="location.href={{trending_videos["trends"][4]["video_link"]}}"><a href="{{trending_videos["trends"][4]["video_link"]}}">{{trending_videos["trends"][4]["video_link"]}}</a></td>
+            <td onclick=location.href="{{trending_videos["trends"][4]["video_link"]}}"><a href="{{trending_videos["trends"][4]["video_link"]}}">{{trending_videos["trends"][4]["video_link"]}}</a></td>
           </tr>
         </table>
       </div>
