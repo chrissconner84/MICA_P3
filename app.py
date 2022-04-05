@@ -156,6 +156,29 @@ def country():
          print(country_df)
          return  country_jsonStr
 
+@app.route("/top_videos")
+def top_video():
+        #Run query
+         tvs=engine.execute("SELECT * from unique_videos_df")
+         tvs_df=pd.DataFrame(tvs,columns=tvs.keys())
+         tvs_json=tvs_df.to_dict(orient="records")
+         tvs_jsonStr = json.dumps(tvs_json)
+         #res = [{k:v for k, v in row.items()} for i, row in countries_likes_dislikes_view_count_df.iterrows()]
+
+         return  tvs_jsonStr
+
+@app.route("/top_channels")         
+def top_channels():
+        #Run query
+         tcs=engine.execute("SELECT * from channel_cat")
+         tcs_df=pd.DataFrame(tcs,columns=tcs.keys())
+         tcs_json=tcs_df.to_dict(orient="records")
+         tcs_jsonStr = json.dumps(tcs_json)
+         #res = [{k:v for k, v in row.items()} for i, row in countries_likes_dislikes_view_count_df.iterrows()]
+
+         return  tcs_jsonStr
+
+
 
 if __name__ == "__main__":
     app.run(debug=True)
