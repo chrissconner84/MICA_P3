@@ -6,6 +6,7 @@ from flask_pymongo import PyMongo
 import pandas as pd
 import json, os
 import scrape_youtube
+import plotly.express as px
 
 app = Flask(__name__)
 

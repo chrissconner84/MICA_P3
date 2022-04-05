@@ -47,19 +47,101 @@ d3.json("./testing").then(function(data) {
 
 d3.json("./country").then(function(data_country) {
   console.log(data_country);
-  // data_country.forEach(function(data) {
+  var thekeys=(Object.values(data_country))
+  console.log(thekeys)
+    // data_country.forEach(function(data) {
   //  var cols=Object.values(data[0])
   //  console.log(cols)
+  countries=[]
   vc_list=[]
+  lr_list=[]
+  cc_list=[]
+  es_list=[]
    for (var i = 0; i < data_country.length; i++) {
-    var vc = data_country[i].view_count;
-    vc_list.push(vc)
-    // var lr = data_country[i].view_count;
-    // var cc = data_country[i].view_count;
-    // var es = data_country[i].view_count;
+    var countryname = data_country[i].country;
+    countries.push(countryname)
+     var vc = data_country[i].view_count;
+     vc_list.push(vc)
+     var lr = data_country[i].likes_ratio;
+     lr_list.push(lr)
+     var cc = data_country[i].comment_count;
+     cc_list.push(cc)
+     var es = data_country[i].engagement_score;
+     es_list.push(es)
   
   }
-  console.log(vc_list)
+
+  //console.log(countryname,vc_list,lr_list,cc_list,es_list)
+  var cht=document.getElementById("bar3").getContext("2d")
+  var barChart=new Chart(cht,{
+    type:'bar',
+    data:{
+      labels: countries,
+      datasets:[
+        {
+        label:"Countries View Counts",
+        data: vc_list,
+        fill:false,
+        bordercolor:"rgb (75,192,192)",
+        lineTension: 0.1, 
+    }]},
+      options: {
+      responsive:false
+    }
+  })
+  var cht=document.getElementById("bar4").getContext("2d")
+  var barChart=new Chart(cht,{
+    type:'bar',
+    data:{
+      labels: countries,
+      datasets:[
+        {
+        label:"Countries Likes Ratio",
+        data: vc_list,
+        fill:false,
+        bordercolor:"rgb (75,192,192)",
+        lineTension: 0.1, 
+    }]},
+      options: {
+      responsive:false
+    }
+  })
+
+  var cht=document.getElementById("bar5").getContext("2d")
+  var barChart=new Chart(cht,{
+    type:'bar',
+    data:{
+      labels: countries,
+      datasets:[
+        {
+        label:"Countries Comments Count",
+        data: cc_list,
+        fill:false,
+        bordercolor:"rgb (75,192,192)",
+        lineTension: 0.1, 
+    }]},
+      options: {
+      responsive:false
+      }
+})  
+
+var cht=document.getElementById("bar6").getContext("2d")
+  var barChart=new Chart(cht,{
+    type:'bar',
+    data:{
+      labels: countries,
+      datasets:[
+        {
+        label:"Engagement Score Count",
+        data: es_list,
+        fill:false,
+        bordercolor:"rgb (75,192,192)",
+        lineTension: 0.1, 
+    }]},
+      options: {
+      responsive:false
+      }
+})  
 });
   
   //  var countries=d3.values(data_country, function(d) { return d.country; });
@@ -67,20 +149,20 @@ d3.json("./country").then(function(data_country) {
   //  var lr = d3.values(data_country, function(d) { return d.likes_ratio; });
   //  var cc = d3.values(data_country, function(d) { return d.comment_count; });
   //  var es = d3.values(data_country, function(d) { return d.engagement_score; });
-//   var data = [{
-//       x: ['View Count'],
-//       y:[vc],
+  //  var data = [{
+  //      x: [country_name], //,"2","3","4"],
+  //      y: [vc_list], //,lr_list,cc_list,es_list],
 
-//       type: "bar"
-//   }];
+  //      type: "bar"
+  //  }];
 
-//   var layout = {
-//     height: 400,
-//     width: 400
-//   };
+  //  var layout = {
+  //    height: 800,
+  //    width: 800
+  //  };
 
-//   Plotly.newPlot("bar3", data, layout);
-
+  //  px.newPlot("bar3", data, layout);
+  
 // function init() {
 //     var data = [{
 //         values: [5,10,25],
