@@ -129,6 +129,32 @@ def country_numbers():
         print(countries_numbers_jsonStr)
         return  countries_numbers_jsonStr
 
+@app.route("/cat_code")
+def cat_code():
+        #Run query
+         cat_code=engine.execute("SELECT * from cat_code_ag")
+         cat_code_df=pd.DataFrame(cat_code,columns=cat_code.keys())
+         cat_code_json=cat_code_df.to_dict(orient="records")
+        
+         cat_code_jsonStr = json.dumps(cat_code_json)
+         #res = [{k:v for k, v in row.items()} for i, row in countries_likes_dislikes_view_count_df.iterrows()]
+
+         print(cat_code_df)
+         return  cat_code_jsonStr
+
+@app.route("/country")
+def country():
+        #Run query
+         country=engine.execute("SELECT * from country_ag")
+         country_df=pd.DataFrame(country,columns=country.keys())
+         country_json=country_df.to_dict(orient="records")
+        
+         country_jsonStr = json.dumps(country_json)
+         #res = [{k:v for k, v in row.items()} for i, row in countries_likes_dislikes_view_count_df.iterrows()]
+
+         print(country_df)
+         return  country_jsonStr
+
 
 if __name__ == "__main__":
     app.run(debug=True)
