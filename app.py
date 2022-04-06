@@ -120,15 +120,19 @@ def scraper():
 @app.route("/wm_fill")
 def country_numbers():
         #Run query
-        countries_numbers=engine.execute("select country, count(country),sum(view_count), sum(likes), sum(dislikes) from all_data group by country")
-        countries_numbers_df=pd.DataFrame( countries_numbers,columns= countries_numbers.keys())
-        countries_numbers_json=countries_numbers_df.to_dict(orient="records")
+        countries_geo_data=engine.execute("select * from country_geo")
+        countries_geo_df=pd.DataFrame( countries_geo_data,columns= countries_geo_data.keys())
+        countries_geo_json=countries_geo_df.to_dict(orient="records")
+        countries_geo_json_jsonStr = json.dumps(countries_geo_json)
+        # countries_numbers=engine.execute("select country, count(country),sum(view_count), sum(likes), sum(dislikes) from all_data group by country")
+        # countries_numbers_df=pd.DataFrame( countries_numbers,columns= countries_numbers.keys())
+        # countries_numbers_json=countries_numbers_df.to_dict(orient="records")
         
-        countries_numbers_jsonStr = json.dumps(countries_numbers_json)
+        # countries_numbers_jsonStr = json.dumps(countries_numbers_json)
         #res = [{k:v for k, v in row.items()} for i, row in countries_likes_dislikes_view_count_df.iterrows()]
 
-        print(countries_numbers_jsonStr)
-        return  countries_numbers_jsonStr
+        print(countries_geo_json_jsonStr)
+        return  countries_geo_json_jsonStr
 
 @app.route("/cat_code")
 def cat_code():
