@@ -7,10 +7,17 @@
   <script src="./static/js/app.js"></script>
   <div class="container">
   <div class="row">
+    <div class="col-md-4">
     <h1>Dashboard</h1>
-    </div>
   </div>
-      
+  <div class="col-md-4">
+  <div class="well">
+    <h5>Category Name:</h5>
+    <select id="selDataset1" onchange="optionChanged(this.value)"></select>
+  </div>
+</div>
+</div> 
+</div>   
   <div class="container">
     
     <div class="row">
@@ -53,16 +60,13 @@
       <div class="col-md-4"> 
 
         <h3>Total Days Trending</h3>
-        <div class="well">
-          <h5>Category Name:</h5>
-          <select id="selDataset1" onchange="optionChanged(this.value)"></select>
-        </div>
+        
           <div id="bar1"></div>
       </div>       
       <div class="col-md-4"> 
         <h3>Total Views</h3>
           <div id="bar2"></div>
-      </div>  
+      </div
       <!-- <div class="col-md-8"> -->
 
         <!-- <div><title>Bar Chart</title>
@@ -102,7 +106,10 @@
      </div> -->
      </div>
     <div class="row">
-      
+      <div class="col-md-4"> 
+        <h3>Total Views</h3>
+          <div id="bar2"></div>
+      </div>  
     </div>
   </div>    
   {%endblock%}      
