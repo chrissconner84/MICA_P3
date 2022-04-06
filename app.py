@@ -187,7 +187,15 @@ def MJ_top_channels():
         top_channels_jsonStr = json.dumps(mj_top_channels_json)
         #res = [{k:v for k, v in row.items()} for i, row in countries_likes_dislikes_view_count_df.iterrows()]
         return  top_channels_jsonStr
-
+@app.route("/mj2")
+def MJ_top_channels_group_by_catcodes():
+        #Run query
+        mj_top_channels2=engine.execute("select * from grouped_cat") 
+        mj_top_channels2_df=pd.DataFrame(mj_top_channels2,columns=mj_top_channels2.keys())
+        mj_top_channels2_json=mj_top_channels2_df.to_dict(orient="records")
+        top_channels2_jsonStr = json.dumps(mj_top_channels2_json)
+        #res = [{k:v for k, v in row.items()} for i, row in countries_likes_dislikes_view_count_df.iterrows()]
+        return  top_channels2_jsonStr
 
 if __name__ == "__main__":
     app.run(debug=True)

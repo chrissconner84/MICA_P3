@@ -52,11 +52,7 @@ d3.json("/top_channels").then(function(data) {
     //             .slice(0, 10);
     
     // console.log(top10)            
-    }
-    
-  //console.log(data);
-    
-    );
+});
 
   // countries=[]
   // vc_list=[]
@@ -95,21 +91,42 @@ d3.json("/top_channels").then(function(data) {
   //   }
   // })
 // })  
+
+var all_data={}
 d3.json("/mj").then(function(bob) {
   var top_channel=bob.map(function (bob1) {return bob1.channeltitle} )
   var top_count=bob.map(function (bob1) {return bob1.count} )
   var cat_codes=bob.map(function (bob1) {return bob1.cat_codes} )
+  //  //Select the id 
+   unique_cat_codes = cat_codes.filter((x, i, a) => a.indexOf(x) == i)
+   all_data=bob;
+   console.log("unique_cat_codes=",unique_cat_codes)
+   for (var i=0;i< unique_cat_codes.length;i++){
+    // console.log("cat_codes=",cat_codes[i])
+      d3.select("#selDataset").append("option").attr("value",unique_cat_codes[i]).text(unique_cat_codes[i]);
+   }
   console.log("top_channel=",top_channel)
   console.log("top_count=",top_count)
   console.log("max=",d3.max(top_count))
-
+  console.log("cat_codes=",d3.max(top_count))
 
   let trace1 = [{
-      x: top_channel.slice(0,100),
+      x: top_channel.slice(0,10),
       y: top_count,
-      marker:cat_codes,
-      type: "bar"
-    }];
+      type: "bar",
+      // marker:{
+      //   color: ['red', 'purple','green', 'brown', 'orange', 'blue', 'black', 'pink', 'yellow', 'grey', 'light blue', 'light green', 'dark red', 'dark grey','dark pink']
+      // },
+    //   marker:{
+    //     color: [{'Entertainment': 'red'}, {'Music': 'purple'}, {'People & Blogs': 'green'}, {'Gaming': 'purple'}, {'Sports': 'orange'}, 
+    //     {'Comedy': 'blue'}, {'News & Politics': 'black'}, {'Film & Animation': 'yellow'}, {'Science & Technology': 'grey'}, 
+    //     {'Autos & Vehicles': 'light blue'}, {'Education': 'light green'}, {'Travel & Events': 'dark red'}, {'Pets & Animals': 'dark grey'},
+    //     {'Nonprofits & Activism': 'dark pink'}]
+        
+
+    // }
+
+  }];
   let layout = {
     width:600,
     height:400,
@@ -118,4 +135,61 @@ d3.json("/mj").then(function(bob) {
     };
   
   Plotly.newPlot("bar1", trace1, layout)
+
 })
+
+d3.json("/mj2").then(function(bob) {
+
+  var top_count=bob.map(function (bob1) {return bob1.count} )
+  var cat_codes=bob.map(function (bob1) {return bob1.cat_codes} )
+  //  //Select the id 
+   
+  let trace1 = [{
+      x: cat_codes,
+      y: top_count,
+
+      type: "bar"
+    }];
+  let layout = {
+    width:600,
+    height:400,
+    title: "Top Channels by Most Trending Days",
+    barmode:"group"
+    };
+  
+  Plotly.newPlot("bar2", trace1, layout)
+
+})
+
+// d3.select("#selDataset").on("change", getData);
+  
+// function getData() {
+//   var dropdownMenu = d3.select("#selDataset");
+//   console.log(dropdownMenu)
+//   // Assign the value of the dropdown menu option to a variable
+//   var dataset = dropdownMenu.property("value");
+//   console.log("dataset:",dataset);
+//   var match = y.filter(obj => {
+//     return obj.cat_codes === dataset;
+//   });
+//   console.log("match:",match);
+//   // Update matched data
+//   var  updated_data = [{
+//     x: match[0].sample_values.reverse(),
+//     y: match[0].otu_ids.reverse(),
+//     type: "bar",
+//     orientation:"h",
+//     name:match[0].id,
+//     marker: {
+//         color: 'rgba(55,128,191,0.8)',
+//         width: 2,
+//       },
+//     categoryorder:'total descending'
+//   }];
+
+
+//   // PLot the bar and bubble plots. The gauge plot as plotted earlier on line 290
+//   updatePlotly(updated_data, updated_data1);
+
+
+// };
