@@ -201,5 +201,26 @@ def MJ_top_channels_group_by_catcodes():
         #res = [{k:v for k, v in row.items()} for i, row in countries_likes_dislikes_view_count_df.iterrows()]
         return  top_channels2_jsonStr
 
+@app.route("/dash")
+def dash_app():
+        #Run query
+        channels_grouped = pd.read_sql("select channeltitle, cat_codes, count(trending_date) from all_data group by channeltitle, cat_codes order by count(channeltitle) DESC", con = engine)
+        fig = px.bar(channels_grouped,
+             x = channels_grouped['channeltitle'][0:100],
+             y = channels_grouped['count'][0:100],
+             color = channels_grouped['cat_codes'][0:100],
+             labels = {'x': 'Channel Title',
+                      'y': 'Total Trending Days'},
+             title = 'Top YouTube Channels by Total Trending Days',
+             text_auto = True)
+        dash_app.layout = html.Div(id = 'dash-container')
+        fig.write_html('./templates/channels_pretty.html')
+        # channels_grouped_df=pd.DataFrame(channels_grouped,columns=mj_top_channels2.keys())
+        # channels_grouped_json=channels_grouped_df.to_dict(orient="records")
+        # channels_grouped_jsonStr = json.dumps(channels_grouped_json)
+        #res = [{k:v for k, v in row.items()} for i, row in countries_likes_dislikes_view_count_df.iterrows()]
+        return render_template('channels_pretty.html')
+
+
 if __name__ == "__main__":
     app.run(debug=True)
