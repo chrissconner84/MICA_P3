@@ -62,11 +62,17 @@ d3.json("./country").then(function(data_country) {
         data: vc_list,
         fill:false,
         bordercolor:"rgb (75,192,192)",
+        backgroundColor:"blue",
         lineTension: 0.1, 
     }]},
-      options: {
-      responsive:false
+    options: {
+      layout: {
+        padding: 10
+     },
+       responsive:false 
+  
     }
+       
   })
   var cht=document.getElementById("bar4").getContext("2d")
   var barChart=new Chart(cht,{
@@ -77,13 +83,20 @@ d3.json("./country").then(function(data_country) {
         {
         label:"Countries Likes Ratio",
         data: vc_list,
-        fill:false,
+        fill:true,
         bordercolor:"rgb (75,192,192)",
+        backgroundColor:"green",
         lineTension: 0.1, 
+        
     }]},
       options: {
-      responsive:false
-    }
+        layout: {
+          padding: 10
+       },
+         responsive:false 
+    
+      }
+    
   })
 
   var cht=document.getElementById("bar5").getContext("2d")
@@ -97,29 +110,45 @@ d3.json("./country").then(function(data_country) {
         data: cc_list,
         fill:false,
         bordercolor:"rgb (75,192,192)",
+        backgroundColor:"purple",
         lineTension: 0.1, 
-    }]},
+      }]},
       options: {
-      responsive:false
+        layout: {
+          padding: 10
+       },
+         responsive:false 
+    
       }
-})  
+    
+  })
 
 var cht=document.getElementById("bar6").getContext("2d")
   var barChart=new Chart(cht,{
     type:'bar',
     data:{
       labels: countries,
+      color:"blue",
       datasets:[
         {
         label:"Engagement Score Count",
         data: es_list,
         fill:false,
-        bordercolor:"rgb (75,192,192)",
+        bordercolor:"blue",
+        backgroundColor:"red",
+        
         lineTension: 0.1, 
-    }]},
+      }]},
       options: {
-      responsive:false
+        layout: {
+          padding: 10,
+          
+       },
+         responsive:false,
+         color:"blue" 
+    
       }
-})  
+    
+  })
 });
   
