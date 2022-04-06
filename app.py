@@ -178,6 +178,15 @@ def top_channels():
 
          return  tcs_jsonStr
 
+@app.route("/mj")
+def MJ_top_channels():
+        #Run query
+        mj_top_channels=engine.execute("select * from mj_top_channels") 
+        mj_top_channels_df=pd.DataFrame(mj_top_channels,columns=mj_top_channels.keys())
+        mj_top_channels_json=mj_top_channels_df.to_dict(orient="records")
+        top_channels_jsonStr = json.dumps(mj_top_channels_json)
+        #res = [{k:v for k, v in row.items()} for i, row in countries_likes_dislikes_view_count_df.iterrows()]
+        return  top_channels_jsonStr
 
 
 if __name__ == "__main__":

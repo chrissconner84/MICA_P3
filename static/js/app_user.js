@@ -3,14 +3,17 @@
 d3.json("./testing").then(function(data) {
     console.log(data);
      
-     var countries = d3.sum(data, function(d) { return d.likes; }); 
+     d3.sum(data, function(d) { return d.likes; }); 
+     var columnsIn = data[0]; 
+     for(var key in columnsIn){
+       console.log(key)}; // here is your column name you are looking for
      var sum_likes = d3.sum(data, function(d) { return d.likes; });
      var sum_dislikes = d3.sum(data, function(d) { return d.dislikes; });
 
 // This is where the Plotly starts    
 
     var data = [{
-        x: "data.country",
+        x: columnsIn,
         y: [sum_likes, sum_dislikes],
   
         type: "bar"
@@ -28,7 +31,7 @@ d3.json("./testing").then(function(data) {
 });
 
 d3.json("./country").then(function(data_country) {
-  console.log(data_country);
+  //console.log(data_country);
   countries=[]
   vc_list=[]
   lr_list=[]
@@ -120,4 +123,3 @@ var cht=document.getElementById("bar6").getContext("2d")
 })  
 });
   
- 
