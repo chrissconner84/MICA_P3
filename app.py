@@ -213,7 +213,7 @@ def dash_app():
                       'y': 'Total Trending Days'},
              title = 'Top YouTube Channels by Total Trending Days',
              text_auto = True)
-        dash_app.layout = html.Div(id = 'dash-container')
+             
         fig.write_html('./templates/channels_pretty.html')
         # channels_grouped_df=pd.DataFrame(channels_grouped,columns=mj_top_channels2.keys())
         # channels_grouped_json=channels_grouped_df.to_dict(orient="records")

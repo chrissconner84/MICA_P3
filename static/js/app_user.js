@@ -40,17 +40,27 @@ d3.json("./country").then(function(data_country) {
    for (var i = 0; i < data_country.length; i++) {
     var countryname = data_country[i].country;
     countries.push(countryname)
+
      var vc = data_country[i].view_count;
      vc_list.push(vc)
+     
      var lr = data_country[i].likes_ratio;
      lr_list.push(lr)
+     
      var cc = data_country[i].comment_count;
      cc_list.push(cc)
+     
      var es = data_country[i].engagement_score;
      es_list.push(es)
+     
   
   }
-  
+  console.log('countries:',countries)
+  console.log('engagement score:',es_list)
+  console.log('comment count:',cc_list)
+  console.log('view count:',vc_list)
+  console.log('likes ratio:',lr_list)
+
   var cht=document.getElementById("bar3").getContext("2d")
   var barChart=new Chart(cht,{
     type:'bar',
@@ -106,7 +116,7 @@ d3.json("./country").then(function(data_country) {
       labels: countries,
       datasets:[
         {
-        label:"Countries Comments Count",
+        label:"Countries Comments Ratio",
         data: cc_list,
         fill:false,
         bordercolor:"rgb (75,192,192)",
