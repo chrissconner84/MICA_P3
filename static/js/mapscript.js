@@ -34,9 +34,20 @@ d3.json("/wm_fill").then(function (data) {
   "capital lat:",lat,"capitla lon:",lon,"total days:",total_records)
 
   for (var index = 0; index < countries.length; index++) {
+    var test=countries[index]+" has "+total_records[index] +" in our dataset"
+    var zlat=lat[index]
+    var zlon=lon[index]
+    //var latlng=(zlat,zlon)
     var marker = L.marker([lat[index],lon[index]])
+    
     .addTo(map)
-    marker.bindPopup(countries[index])
+    marker.bindPopup(test)
+    marker.on('click', function(e){
+        map.setView(e.latlng, 5);
+    });
+     marker.on('mouseout', function(e){
+         map.setView([52.52, 13.40], 2);
+     });
 
 
 
