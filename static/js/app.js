@@ -1,142 +1,145 @@
-//const path = "./testing";
-var gdata
 
-//This is the D3 object getting brought in from the route
-// d3.json("./testing").then(function(data) {
-//     console.log(data);
-//     Object.entries(data).forEach((entry) => {
-//       const [key, value] = entry;
-//       console.log(`${key}: ${value}`);
-//     var columnsIn = data[0]; 
-//     var thekeys=[]
-//     //console.log(columnsIn)
-//     for(var key1 in columnsIn){
-//       thekeys.push(key)
-//       console.log(key1)};
-//       console.log(thekeys) // here is your column name you are looking for
-//     var sum_likes = d3.sum(data, function(d) { return d.likes; });
-//     var sum_dislikes = d3.sum(data, function(d) { return d.dislikes; });
-//     var sum_view_count = d3.sum(data, function(d) { return d.view_count; });
+//Returns value of the option
+function optionChanged(value){
 
-//     // This is where the Plotly starts
-//     var data = [{
-//         x: [1,2,3,4],
-//         // y: [sum_likes, sum_dislikes],
-//         y:[thekeys],
-  
-//         type: "bar"
-//     }];
-  
-//     var layout = {
-//       height: 400,
-//       width: 600
-//     };
-  
-//     Plotly.newPlot("bar1", data, layout);
-//     Plotly.newPlot("bar2", data, layout);
-// });
+  return value;
+}
+// Returns the array of values that match a particular key in a json object
+function getValues(obj, key) {
+  var objects = [];
+  for (var i in obj) {
+      if (!obj.hasOwnProperty(i)) continue;
+      if (typeof obj[i] == 'object') {
+          objects = objects.concat(getValues(obj[i], key));
+      } else if (i == key) {
+          objects.push(obj[i]);
+      }
+  }
+  return objects;
+}
 
-// })
-d3.json("/top_channels").then(function(data) {
-  //for (var i = 0; i < data.length; i++) {
-    //console.log(data[i].country)
-    //but need to filter by country ALSO
-    //var top10 = data.sort(function(a, b) { return a.count < b.count ? 1 : -1; })
-    //            .slice(0, 11);
-    gdata=data
-    console.log(gdata)
-    // WE NEED TO FILTER FOR EACH COUNTRY, SORT BY COUNT COLUMN, SLICE TOP 10
-   
-    // Object.values(data).forEach((sample)=> {
-    //   var top10 = sample.sort(function(a, b) { return a.count < b.count ? 1 : -1; })
-    //             .slice(0, 10);
-    
-    // console.log(top10)            
-});
+// Random color generator. Not used for now but can be used if need be
+function generateRandomColor(){
+  let maxVal = 0xFFFFFF; // 16777215.
+  let randomNumber = Math. random() * maxVal;
+  randomNumber = Math. floor(randomNumber);
+  randomNumber = randomNumber. toString(16);
+  let randColor = randomNumber. padStart(6, 0);
+  return `#${randColor. toUpperCase()}`
+}
 
-  // countries=[]
-  // vc_list=[]
-  // lr_list=[]
-  // cc_list=[]
-  // es_list=[]
-  //  for (var i = 0; i < data_country.length; i++) {
-  //   var countryname = data_country[i].country;
-  //   countries.push(countryname)
-  //    var vc = data_country[i].view_count;
-  //    vc_list.push(vc)
-  //    var lr = data_country[i].likes_ratio;
-  //    lr_list.push(lr)
-  //    var cc = data_country[i].comment_count;
-  //    cc_list.push(cc)
-  //    var es = data_country[i].engagement_score;
-  //    es_list.push(es)
-  
-  // }
-  
-  // var cht=document.getElementById("bar3").getContext("2d")
-  // var barChart=new Chart(cht,{
-  //   type:'bar',
-  //   data:{
-  //     labels: countries,
-  //     datasets:[
-  //       {
-  //       label:"Countries View Counts",
-  //       data: vc_list,
-  //       fill:false,
-  //       bordercolor:"rgb (75,192,192)",
-  //       lineTension: 0.1, 
-  //   }]},
-  //     options: {
-  //     responsive:false
-  //   }
-  // })
-// })  
-
-var all_data={}
+//Plot of View count vs Channel titles fo different category codes
 d3.json("/mj").then(function(bob) {
+  // Returns list of channeltitles, count and categories
   var top_channel=bob.map(function (bob1) {return bob1.channeltitle} )
   var top_count=bob.map(function (bob1) {return bob1.count} )
   var cat_codes=bob.map(function (bob1) {return bob1.cat_codes} )
-  //  //Select the id 
+  //  Retieve uniqque category codes
    unique_cat_codes = cat_codes.filter((x, i, a) => a.indexOf(x) == i)
-   all_data=bob;
-   console.log("unique_cat_codes=",unique_cat_codes)
+
+  // Create drop down for each category code
    for (var i=0;i< unique_cat_codes.length;i++){
     // console.log("cat_codes=",cat_codes[i])
-      d3.select("#selDataset").append("option").attr("value",unique_cat_codes[i]).text(unique_cat_codes[i]);
+      d3.select("#selDataset1").append("option").attr("value",unique_cat_codes[i]).text(unique_cat_codes[i]);
    }
-  console.log("top_channel=",top_channel)
-  console.log("top_count=",top_count)
-  console.log("max=",d3.max(top_count))
-  console.log("cat_codes=",d3.max(top_count))
 
+// Generate initial plot across all categories
   let trace1 = [{
       x: top_channel.slice(0,10),
       y: top_count,
       type: "bar",
-      // marker:{
-      //   color: ['red', 'purple','green', 'brown', 'orange', 'blue', 'black', 'pink', 'yellow', 'grey', 'light blue', 'light green', 'dark red', 'dark grey','dark pink']
-      // },
-    //   marker:{
-    //     color: [{'Entertainment': 'red'}, {'Music': 'purple'}, {'People & Blogs': 'green'}, {'Gaming': 'purple'}, {'Sports': 'orange'}, 
-    //     {'Comedy': 'blue'}, {'News & Politics': 'black'}, {'Film & Animation': 'yellow'}, {'Science & Technology': 'grey'}, 
-    //     {'Autos & Vehicles': 'light blue'}, {'Education': 'light green'}, {'Travel & Events': 'dark red'}, {'Pets & Animals': 'dark grey'},
-    //     {'Nonprofits & Activism': 'dark pink'}]
-        
-
-    // }
-
-  }];
-  let layout = {
-    width:600,
-    height:400,
-    title: "Top Channels",
-    barmode:"group"
-    };
+      marker: {color:"blue"}
+      }];
   
+  //Lay Out
+  var layout = {
+    autosize: false,
+    title: "Top Channels",
+    titlefont: { size:25 },
+    width: 500,
+    height: 500,
+    xaxis: {
+          title: {
+            text: 'Channel Titles'
+          },
+          automargin: true,
+          titlefont: { size:20 },
+        },
+    yaxis: {
+      title: 'Total Number of Days Trending',
+      automargin: true,
+      titlefont: { size:20 },
+    },
+
+    // paper_bgcolor: '#7f7f7f',
+    // plot_bgcolor: '#c7c7c7'
+  };
+  // Init plot
   Plotly.newPlot("bar1", trace1, layout)
+// Wait for another input sselection and call getData 
+  d3.selectAll("#selDataset1").on("change", function () {
+    getData(bob)});
 
 })
+
+
+// Function getData
+function getData(data) {
+  var dropdownMenu = d3.select("#selDataset1");
+  // Assign the value of the dropdown menu option to a variable
+  var dataset = dropdownMenu.property("value");
+  console.log("dataset:",dataset);
+  // Find the matching cat codes 
+  var match = data.filter(obj => {
+    return obj.cat_codes === dataset;
+  });
+  // Define a color table per key. Update matched data
+  color_table=[{'Entertainment': 'red'}, {'Music': 'purple'}, {'People & Blogs': 'green'}, {'Gaming': 'purple'}, {'Sports': 'orange'}, 
+  {'Comedy': 'blue'}, {'News & Politics': 'black'}, {'Film & Animation': 'yellow'},
+   {'Science & Technology': 'lime'}, {'Autos & Vehicles': 'olive'}, 
+   {'Education': 'navy'}, {'Travel & Events': 'teal'},
+    {'Pets & Animals': 'aqua'}, {'Nonprofits & Activism': 'choclate'},{'Howto & Style':'darkblue'}]
+  
+    // Find the color value for a matchin category in the list.
+    var color_code = getValues(color_table, dataset)
+    var  updated_data = [{
+    x: match.map(({channeltitle})=>channeltitle).slice(0,10),
+    y: match.map(({count})=>count),
+    type: "bar",
+    marker: {color:color_code[0]}
+
+  }];
+  console.log("marker:",color_code)
+
+  //Layout 
+  var layout = {
+    autosize: false,
+    title: "Top Channels",
+    titlefont: { size:25 },
+    width: 500,
+    height: 500,
+    xaxis: {
+          title: {
+            text: 'Channel Titles'
+          },
+          automargin: true,
+          titlefont: { size:20 },
+        },
+    yaxis: {
+      title: 'Total Number of Days Trending',
+      automargin: true,
+      titlefont: { size:20 },
+    },
+
+  };
+
+  Plotly.newPlot("bar1",  updated_data,layout);
+
+
+};
+
+
+//Second plot. No drop down menu
 
 d3.json("/mj2").then(function(bob) {
 
@@ -147,49 +150,28 @@ d3.json("/mj2").then(function(bob) {
   let trace1 = [{
       x: cat_codes,
       y: top_count,
-
       type: "bar"
     }];
-  let layout = {
-    width:600,
-    height:400,
-    title: "Top Channels by Most Trending Days",
-    barmode:"group"
+    var layout = {
+      autosize: false,
+      title: "Top Channels by Most Trending Days",
+      titlefont: { size:25 },
+      width: 500,
+      height: 500,
+      xaxis: {
+            title: {
+              text: 'Categories'
+            },
+            automargin: true,
+            titlefont: { size:20 },
+          },
+      yaxis: {
+        title: 'Total Number of Days Trending',
+        automargin: true,
+        titlefont: { size:20 },
+      },
     };
   
   Plotly.newPlot("bar2", trace1, layout)
 
 })
-
-// d3.select("#selDataset").on("change", getData);
-  
-// function getData() {
-//   var dropdownMenu = d3.select("#selDataset");
-//   console.log(dropdownMenu)
-//   // Assign the value of the dropdown menu option to a variable
-//   var dataset = dropdownMenu.property("value");
-//   console.log("dataset:",dataset);
-//   var match = y.filter(obj => {
-//     return obj.cat_codes === dataset;
-//   });
-//   console.log("match:",match);
-//   // Update matched data
-//   var  updated_data = [{
-//     x: match[0].sample_values.reverse(),
-//     y: match[0].otu_ids.reverse(),
-//     type: "bar",
-//     orientation:"h",
-//     name:match[0].id,
-//     marker: {
-//         color: 'rgba(55,128,191,0.8)',
-//         width: 2,
-//       },
-//     categoryorder:'total descending'
-//   }];
-
-
-//   // PLot the bar and bubble plots. The gauge plot as plotted earlier on line 290
-//   updatePlotly(updated_data, updated_data1);
-
-
-// };

@@ -2,11 +2,9 @@
 {% block title %}Trending YouTube Videos {% endblock %}
 
 {%block content%}
-<head>
-  <script src="./static/js/app.js"></script>
-  
-</head>
+
 <body>
+  <script src="./static/js/app.js"></script>
   <div class="container">
   <div class="row">
     <h1>Dashboard</h1>
@@ -56,8 +54,8 @@
 
         <h3>Total Days Trending</h3>
         <div class="well">
-          <h5>Test Subject ID No.:</h5>
-          <select id="selDataset" onchange="optionChanged(this.value)"></select>
+          <h5>Category Name:</h5>
+          <select id="selDataset1" onchange="optionChanged(this.value)"></select>
         </div>
           <div id="bar1"></div>
       </div>       
@@ -108,5 +106,7 @@
     </div>
   </div>    
   {%endblock%}      
+  <!-- <script src="./static/js/app.js"></script> -->
+
 </body>
 </html>
