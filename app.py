@@ -233,13 +233,24 @@ def notdash():
    channels_grouped = pd.read_sql("select channeltitle, cat_codes, count(trending_date) from all_data group by channeltitle, cat_codes order by count(channeltitle) DESC", con = engine)
    channels_grouped_df=pd.DataFrame(channels_grouped)
    fig = px.bar(channels_grouped,
-             x = channels_grouped_df['channeltitle'][0:100],
-             y = channels_grouped_df['count'][0:100],
-             color = channels_grouped_df['cat_codes'][0:100],
+             x = channels_grouped['channeltitle'][0:50],
+             y = channels_grouped['count'][0:50],
+             color = channels_grouped['cat_codes'][0:50],
              labels = {'x': 'Channel Title',
-                      'y': 'Total Trending Days'},
-             title = 'Use Legend on Right Hand Side to Change View',
-             text_auto = True)
+                      'y': 'Total Trending Days',
+                      'color':'Category'},
+             title = 'Top YouTube Channels by Total Trending Days',
+             text_auto = True,
+             height = 700
+                        )
+   fig.update_layout(xaxis_categoryorder = 'total descending')
+   fig.update_layout(title_x = 0.5)
+
+   fig.update_layout(
+    yaxis = dict(
+    tickfont = dict(size=20)))
+   
+   
    graphJSON = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
    return render_template('notdash.html', graphJSON=graphJSON)
 #      return render_template('notdash.html', graphJSON=graphJSON)   
@@ -273,7 +284,7 @@ def user_eng2():
        y = country_ag3['comment_count'],
        color = 'country',
        labels={'country':'Country',
-                     'comment_count':'Comment Count (%)'})
+                     'comment_count':'Comments Ratio(%)'})
 
    # START of GRAPH 4 
    country_ag4 = pd.read_sql("SELECT * FROM country_ag", con = engine)
