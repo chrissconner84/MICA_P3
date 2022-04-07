@@ -229,7 +229,7 @@ def dash_app():
 
 @app.route("/notdash")
 def notdash():
-      
+   #Top Chart on notdash.html   
    channels_grouped = pd.read_sql("select channeltitle, cat_codes, count(trending_date) from all_data group by channeltitle, cat_codes order by count(channeltitle) DESC", con = engine)
    channels_grouped_df=pd.DataFrame(channels_grouped)
    fig = px.bar(channels_grouped,
@@ -245,14 +245,25 @@ def notdash():
                         )
    fig.update_layout(xaxis_categoryorder = 'total descending')
    fig.update_layout(title_x = 0.5)
-
+   #Bottom Chart on notdash.html
+   categories_grouped = pd.read_sql("select cat_codes, count(trending_date) from all_data group by cat_codes order by count(channeltitle) DESC", con = engine)
    fig.update_layout(
     yaxis = dict(
     tickfont = dict(size=20)))
    
-   
+   fig1 = px.bar(categories_grouped,
+             x = 'cat_codes',
+             y = 'count',
+             #color = all_data[]
+             labels = {'cat_codes': 'Category Title',
+                      'count': 'Total Trending Days'},
+             title = 'Top YouTube Categories by Total Trending Days',
+             text_auto = True,
+             height = 700)
+   fig1.update_layout(title_x = 0.5)           
    graphJSON = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
-   return render_template('notdash.html', graphJSON=graphJSON)
+   graphJSON1 = json.dumps(fig1, cls=plotly.utils.PlotlyJSONEncoder)
+   return render_template('notdash.html', graphJSON=graphJSON, graphJSON1=graphJSON1)
 #      return render_template('notdash.html', graphJSON=graphJSON)   
 
 @app.route("/user_eng2")

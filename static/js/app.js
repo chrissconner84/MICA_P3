@@ -114,7 +114,7 @@ function getData(data) {
   //Layout 
   var layout = {
     autosize: false,
-    title: "Top Channels",
+    title: "Top 10 Channels",
     titlefont: { size:25 },
     width: 500,
     height: 500,
