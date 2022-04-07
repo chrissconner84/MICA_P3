@@ -7,6 +7,7 @@ import pandas as pd
 import json, os
 import scrape_youtube
 import plotly.express as px
+import plotly
 
 app = Flask(__name__)
 
@@ -35,7 +36,9 @@ def index():
           #print(os.getcwd())
           with open("trending_videos.json", 'r', encoding='UTF-8') as f:
             trending_videos= json.load(f)
-            print(trending_videos)        
+            print(trending_videos)
+        
+               
         return render_template("index.html",countries=all_countries,all_cat_codes=all_cat_codes,rets=rets,ccodes=ccodes,trending_videos=trending_videos)
  
 @app.route("/world_map")
@@ -221,6 +224,23 @@ def dash_app():
         #res = [{k:v for k, v in row.items()} for i, row in countries_likes_dislikes_view_count_df.iterrows()]
         return render_template('channels_pretty.html')
 
+
+@app.route("/notdash")
+def notdash():
+      
+   channels_grouped = pd.read_sql("select channeltitle, cat_codes, count(trending_date) from all_data group by channeltitle, cat_codes order by count(channeltitle) DESC", con = engine)
+   channels_grouped_df=pd.DataFrame(channels_grouped)
+   fig = px.bar(channels_grouped,
+             x = channels_grouped_df['channeltitle'][0:100],
+             y = channels_grouped_df['count'][0:100],
+             color = channels_grouped_df['cat_codes'][0:100],
+             labels = {'x': 'Channel Title',
+                      'y': 'Total Trending Days'},
+             title = 'Top YouTube Channels by Total Trending Days',
+             text_auto = True)
+   graphJSON = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
+   return render_template('notdash.html', graphJSON=graphJSON)
+#      return render_template('notdash.html', graphJSON=graphJSON)   
 
 if __name__ == "__main__":
     app.run(debug=True)

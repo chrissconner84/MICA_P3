@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}Trending YouTube Videos {% endblock %}
+
+{%block content%}
+<body>
+  
+    <h1>Hello Plotly (but not Dash)</h1>
+    <div id='chart' class='chart'></div>
+    <script type='text/javascript'>
+      var graphs = {{graphJSON | safe}};
+      Plotly.plot('chart',graphs,{});
+    </script>
+  
+  {%endblock%}  
+</body>
+</html>

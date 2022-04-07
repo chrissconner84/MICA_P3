@@ -92,7 +92,7 @@ d3.json("./country").then(function(data_country) {
       datasets:[
         {
         label:"Countries Likes Ratio",
-        data: vc_list,
+        data: lr_list,
         fill:true,
         bordercolor:"rgb (75,192,192)",
         backgroundColor:"green",

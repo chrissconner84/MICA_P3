@@ -66,54 +66,22 @@
       <div class="col-md-4"> 
         <h3>Total Views</h3>
           <div id="bar2"></div>
-      </div
-      <!-- <div class="col-md-8"> -->
-
-        <!-- <div><title>Bar Chart</title>
-          <div id="bar"></div>
-        </div> -->
-        <!-- <div class="card" style="width: 18rem;">
-           <img src=".\static\js\worldmap.jpg" class="card-img-top" alt="visual">
-            <div class="card-body">
-            <p class="card-text">By Category</p>
-           </div>
-        </div> -->
-        <!-- <div class="card" style="width: 18rem;">
-          <img src=".\static\you-tube-logo.jpg" class="card-img-top" alt="visual">
-           <div class="card-body">
-           <p class="card-text">By Country</p>
-          </div>
-        </div> -->
-      <!-- </div>   -->
-      <!-- <div class="col-md-4">  
-        <h3>Streaming Videos by Country</h3>
-        <div class="col-2">
-          <select id="selDataset">
-            {% for x in countries %}
-            <option>{{x}}</option>
-            {% endfor %}
-            </select>    
-        
-            <a href="#"><img src=".\static\js\worldmap.jpg" class="img-responsive" alt="World Map"/></a> 
-        
-            <h3>Select Video category:</h3>
-            <select id="selDataset">
-              {% for x in all_cat_codes %}
-              <option>{{x}}</option>
-              {% endfor %}
-            </select>
-          </div>
-     </div> -->
-     </div>
-    <div class="row">
-      <div class="col-md-4"> 
-        <h3>Total Views</h3>
-          <div id="bar2"></div>
-      </div>  
-    </div>
+      </div>
+      <div class="row">
+      <h1>Trending Video</h1>
+      <div id='chart' class='chart'></div>
+         
+     
+   
+    
   </div>    
-  {%endblock%}      
+       
   <!-- <script src="./static/js/app.js"></script> -->
 
 </body>
+<script type='text/javascript'>
+  var graphs = {{graphJSON | safe}};
+  Plotly.plot('chart',graphs,{});
+</script>
+{%endblock%}
 </html>
