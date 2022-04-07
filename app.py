@@ -260,17 +260,33 @@ def user_eng2():
    country_ag2 = pd.read_sql("SELECT * FROM country_ag", con = engine)
    #country_ag2 = unique_data.groupby('country')['likes_ratio'].median().reset_index()
    fig2 = px.bar(country_ag2,
-       x = 'country',
-       y = 'likes_ratio',
+       x = country_ag2['country'],
+       y = country_ag2['likes_ratio'],
        color = 'country',
        labels={'country':'Country',
                      'likes_ratio':'Likes Ratio (%)'}
        )
-        
+   #START OF GRAPH 3      
+   country_ag3 = pd.read_sql("SELECT * FROM country_ag", con = engine)
+   fig3 = px.bar(country_ag,
+       x = country_ag3['country'],
+       y = country_ag3['comment_count'],
+       color = 'country',
+       labels={'country':'Country',
+                     'likes_ratio':'Likes Ratio (%)'})
+
+   # START of GRAPH 4 
+   country_ag4 = pd.read_sql("SELECT * FROM country_ag", con = engine)
+   fig4 = px.bar(country_ag,
+       x = 'country',
+       y = 'engagement_score',
+       color = 'country')
+
+
    graphJSON1 = json.dumps(fig1, cls=plotly.utils.PlotlyJSONEncoder)
    graphJSON2 = json.dumps(fig2, cls=plotly.utils.PlotlyJSONEncoder)
-   graphJSON3 = json.dumps(fig1, cls=plotly.utils.PlotlyJSONEncoder)
-   graphJSON4 = json.dumps(fig1, cls=plotly.utils.PlotlyJSONEncoder)
+   graphJSON3 = json.dumps(fig3, cls=plotly.utils.PlotlyJSONEncoder)
+   graphJSON4 = json.dumps(fig4, cls=plotly.utils.PlotlyJSONEncoder)
    return render_template('user_eng2.html', graphJSON1=graphJSON1,graphJSON2=graphJSON2,graphJSON3=graphJSON3,graphJSON4=graphJSON4)
 #      return render_template('notdash.html', graphJSON=graphJSON)   
 
