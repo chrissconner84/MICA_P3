@@ -247,21 +247,31 @@ def notdash():
 @app.route("/user_eng2")
 def user_eng2():
       
-   channels_grouped = pd.read_sql("select channeltitle, cat_codes, count(trending_date) from all_data group by channeltitle, cat_codes order by count(channeltitle) DESC", con = engine)
-   channels_grouped_df=pd.DataFrame(channels_grouped)
-   fig = px.bar(channels_grouped,
-             x = channels_grouped_df['channeltitle'][0:100],
-             y = channels_grouped_df['count'][0:100],
-             color = channels_grouped_df['cat_codes'][0:100],
-             labels = {'x': 'Channel Title',
-                      'y': 'Total Trending Days'},
-             title = 'Use Legend on Right Hand Side to Change View',
-             text_auto = True)
-   graphJSON1 = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
-   graphJSON2 = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
-   graphJSON3 = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
-   graphJSON4 = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
-   return render_template('notdash.html', graphJSON1=graphJSON1,graphJSON2=graphJSON2,graphJSON3=graphJSON3,graphJSON4=graphJSON4)
+   #START OF GRAPH 1
+   country_ag = pd.read_sql("SELECT * FROM country_ag", con = engine)
+   #country_ag_df = country_ag['view_count'].median()
+   fig1 = px.bar(country_ag,
+       x = 'country',
+       y = 'view_count',
+       color = 'country',
+       labels={'country':'Country',
+                     'view_count':'Total Views of Trending Videos'}) 
+   #START OF GRAPH 2
+   country_ag2 = pd.read_sql("SELECT * FROM country_ag", con = engine)
+   #country_ag2 = unique_data.groupby('country')['likes_ratio'].median().reset_index()
+   fig2 = px.bar(country_ag2,
+       x = 'country',
+       y = 'likes_ratio',
+       color = 'country',
+       labels={'country':'Country',
+                     'likes_ratio':'Likes Ratio (%)'}
+       )
+        
+   graphJSON1 = json.dumps(fig1, cls=plotly.utils.PlotlyJSONEncoder)
+   graphJSON2 = json.dumps(fig2, cls=plotly.utils.PlotlyJSONEncoder)
+   graphJSON3 = json.dumps(fig1, cls=plotly.utils.PlotlyJSONEncoder)
+   graphJSON4 = json.dumps(fig1, cls=plotly.utils.PlotlyJSONEncoder)
+   return render_template('user_eng2.html', graphJSON1=graphJSON1,graphJSON2=graphJSON2,graphJSON3=graphJSON3,graphJSON4=graphJSON4)
 #      return render_template('notdash.html', graphJSON=graphJSON)   
 
 

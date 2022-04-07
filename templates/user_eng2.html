@@ -42,7 +42,7 @@
         <div id='chart3' class='chart' width="600" height="400"></div>
         <script type='text/javascript'>
           var graphs = {{graphJSON3 | safe}};
-          Plotly.plot('chart4',graphs,{});
+          Plotly.plot('chart3',graphs,{});
         </script>
         </div> 
         <div class="col-md-6">
@@ -59,10 +59,7 @@
     
   
   {%endblock%}   
-  <script type='text/javascript'>
-    var graphs = {{graphJSON | safe}};
-    Plotly.plot('chart',graphs,{});
-  </script>
+  
     
 
 
