@@ -268,20 +268,21 @@ def user_eng2():
        )
    #START OF GRAPH 3      
    country_ag3 = pd.read_sql("SELECT * FROM country_ag", con = engine)
-   fig3 = px.bar(country_ag,
+   fig3 = px.bar(country_ag3,
        x = country_ag3['country'],
        y = country_ag3['comment_count'],
        color = 'country',
        labels={'country':'Country',
-                     'likes_ratio':'Likes Ratio (%)'})
+                     'comment_count':'Comment Count (%)'})
 
    # START of GRAPH 4 
    country_ag4 = pd.read_sql("SELECT * FROM country_ag", con = engine)
-   fig4 = px.bar(country_ag,
+   fig4 = px.bar(country_ag4,
        x = 'country',
        y = 'engagement_score',
-       color = 'country')
-
+       color = 'country',
+       labels ={'country':'Country',
+                     'engagement_score':'Engagement Score (%)'}) 
 
    graphJSON1 = json.dumps(fig1, cls=plotly.utils.PlotlyJSONEncoder)
    graphJSON2 = json.dumps(fig2, cls=plotly.utils.PlotlyJSONEncoder)

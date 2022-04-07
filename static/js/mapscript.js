@@ -34,7 +34,7 @@ d3.json("/wm_fill").then(function (data) {
   "capital lat:",lat,"capitla lon:",lon,"total days:",total_records)
 
   for (var index = 0; index < countries.length; index++) {
-    var test=countries[index]+" has "+total_records[index] +" in our dataset"
+    var test=countries[index]+" has "+total_records[index] +" videos in our dataset"
     var zlat=lat[index]
     var zlon=lon[index]
     //var latlng=(zlat,zlon)
