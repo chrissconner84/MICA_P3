@@ -54,6 +54,8 @@ def user():
       
        return render_template("user_eng.html")
 
+
+
 @app.route("/testing")
 def testing():
         #Run query
@@ -236,11 +238,33 @@ def notdash():
              color = channels_grouped_df['cat_codes'][0:100],
              labels = {'x': 'Channel Title',
                       'y': 'Total Trending Days'},
-             title = 'Top YouTube Channels by Total Trending Days',
+             title = 'Use Legend on Right Hand Side to Change View',
              text_auto = True)
    graphJSON = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
    return render_template('notdash.html', graphJSON=graphJSON)
 #      return render_template('notdash.html', graphJSON=graphJSON)   
+
+@app.route("/user_eng2")
+def user_eng2():
+      
+   channels_grouped = pd.read_sql("select channeltitle, cat_codes, count(trending_date) from all_data group by channeltitle, cat_codes order by count(channeltitle) DESC", con = engine)
+   channels_grouped_df=pd.DataFrame(channels_grouped)
+   fig = px.bar(channels_grouped,
+             x = channels_grouped_df['channeltitle'][0:100],
+             y = channels_grouped_df['count'][0:100],
+             color = channels_grouped_df['cat_codes'][0:100],
+             labels = {'x': 'Channel Title',
+                      'y': 'Total Trending Days'},
+             title = 'Use Legend on Right Hand Side to Change View',
+             text_auto = True)
+   graphJSON1 = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
+   graphJSON2 = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
+   graphJSON3 = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
+   graphJSON4 = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
+   return render_template('notdash.html', graphJSON1=graphJSON1,graphJSON2=graphJSON2,graphJSON3=graphJSON3,graphJSON4=graphJSON4)
+#      return render_template('notdash.html', graphJSON=graphJSON)   
+
+
 
 if __name__ == "__main__":
     app.run(debug=True)
