@@ -127,11 +127,20 @@ d3.json("./country").then(function(data_country) {
         layout: {
           padding: 10
        },
-         responsive:false 
-    
+         responsive:false, 
+         scales: {
+            y: {
+              max: .5,
+              min: 0,
+              ticks: {
+                  stepSize: 0.1
+              }
+            }
       }
-    
-  })
+      
+    }})
+    barChart.update()
+ 
 
 var cht=document.getElementById("bar6").getContext("2d")
   var barChart=new Chart(cht,{

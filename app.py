@@ -258,8 +258,7 @@ def notdash():
              labels = {'cat_codes': 'Category Title',
                       'count': 'Total Trending Days'},
              title = 'Top YouTube Categories by Total Trending Days',
-             text_auto = True,
-             height = 700)
+             text_auto = True)
    fig1.update_layout(title_x = 0.5)           
    graphJSON = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
    graphJSON1 = json.dumps(fig1, cls=plotly.utils.PlotlyJSONEncoder)
@@ -270,41 +269,70 @@ def notdash():
 def user_eng2():
       
    #START OF GRAPH 1
-   country_ag = pd.read_sql("SELECT * FROM country_ag", con = engine)
+   unique_data_grouped_country = pd.read_sql('SELECT country, AVG(view_count) AS avg_view_count, AVG(likes_ratio) AS avg_likes_ratio, AVG(comments_ratio) AS avg_comments_ratio, AVG(engagement_score) AS avg_engagment_score FROM unique_data GROUP BY country;', con = engine)
+   #country_ag = pd.read_sql("SELECT * FROM country_ag", con = engine)
    #country_ag_df = country_ag['view_count'].median()
-   fig1 = px.bar(country_ag,
-       x = 'country',
-       y = 'view_count',
-       color = 'country',
-       labels={'country':'Country',
-                     'view_count':'Total Views of Trending Videos'}) 
+   fig1 = px.bar(unique_data_grouped_country,
+          x = 'country',
+          y = 'avg_view_count',
+          color = 'country',
+          labels={'country':'Country', 'avg_view_count':'Avg Views Amount of Views on Final Trending Date'},
+          title="Avg Views By Country",
+          text_auto = True)
+   fig1.update_layout(title_x = 0.5)     
+
    #START OF GRAPH 2
-   country_ag2 = pd.read_sql("SELECT * FROM country_ag", con = engine)
+   #country_ag2 = pd.read_sql("SELECT * FROM country_ag", con = engine)
    #country_ag2 = unique_data.groupby('country')['likes_ratio'].median().reset_index()
-   fig2 = px.bar(country_ag2,
-       x = country_ag2['country'],
-       y = country_ag2['likes_ratio'],
-       color = 'country',
-       labels={'country':'Country',
-                     'likes_ratio':'Likes Ratio (%)'}
-       )
+   fig2 = px.bar(unique_data_grouped_country,
+           x = 'country', 
+           y = 'avg_likes_ratio',
+           color = 'country',
+           labels={'country':'Country', 'avg_likes_ratio':'Percentage of Likes per View (%)'},
+           title="Avg Views By Country",
+           text_auto = True)
+        #    height = 700)
+   fig2.update_layout(title_x = 0.5) 
+#    fig2 = px.bar(country_ag2,
+#        x = country_ag2['country'],
+#        y = country_ag2['likes_ratio'],
+#        color = 'country',
+#        labels={'country':'Country',
+#                      'likes_ratio':'Likes Ratio (%)'}
+#        )
    #START OF GRAPH 3      
-   country_ag3 = pd.read_sql("SELECT * FROM country_ag", con = engine)
-   fig3 = px.bar(country_ag3,
-       x = country_ag3['country'],
-       y = country_ag3['comment_count'],
+   fig3 = px.bar(unique_data_grouped_country, 
+       x = 'country', 
+       y = 'avg_comments_ratio',
        color = 'country',
-       labels={'country':'Country',
-                     'comment_count':'Comments Ratio(%)'})
+       labels={'country':'Country', 'avg_likes_ratio':'Percentage of Likes per View (%)'},
+       title = 'Avg Comments Per View (%)',
+       text_auto = True)
+   fig3.update_layout(title_x = 0.5)
+#    country_ag3 = pd.read_sql("SELECT * FROM country_ag", con = engine)
+#    fig3 = px.bar(country_ag3,
+#        x = country_ag3['country'],
+#        y = country_ag3['comment_count'],
+#        color = 'country',
+#        labels={'country':'Country',
+#                      'comment_count':'Comments Ratio(%)'})
 
    # START of GRAPH 4 
-   country_ag4 = pd.read_sql("SELECT * FROM country_ag", con = engine)
-   fig4 = px.bar(country_ag4,
-       x = 'country',
-       y = 'engagement_score',
+   fig4 = px.bar(unique_data_grouped_country, 
+       x = 'country', 
+       y = 'avg_engagment_score', 
        color = 'country',
-       labels ={'country':'Country',
-                     'engagement_score':'Engagement Score (%)'}) 
+       labels={'country':'Country', 'avg_engagment_score':'Engagement Score: 50% comments / 49% likes / 1% views'},
+       title = 'Engagement Score',
+       text_auto = True)
+   fig4.update_layout(title_x = 0.5)     
+#    country_ag4 = pd.read_sql("SELECT * FROM country_ag", con = engine)
+#    fig4 = px.bar(country_ag4,
+#        x = 'country',
+#        y = 'engagement_score',
+#        color = 'country',
+#        labels ={'country':'Country',
+#                      'engagement_score':'Engagement Score (%)'}) 
 
    graphJSON1 = json.dumps(fig1, cls=plotly.utils.PlotlyJSONEncoder)
    graphJSON2 = json.dumps(fig2, cls=plotly.utils.PlotlyJSONEncoder)
