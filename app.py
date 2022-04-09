@@ -289,7 +289,7 @@ def user_eng2():
            y = 'avg_likes_ratio',
            color = 'country',
            labels={'country':'Country', 'avg_likes_ratio':'Percentage of Likes per View (%)'},
-           title="Avg Views By Country",
+           title="Avg Likes By Country",
            text_auto = True)
         #    height = 700)
    fig2.update_layout(title_x = 0.5) 
@@ -305,8 +305,8 @@ def user_eng2():
        x = 'country', 
        y = 'avg_comments_ratio',
        color = 'country',
-       labels={'country':'Country', 'avg_likes_ratio':'Percentage of Likes per View (%)'},
-       title = 'Avg Comments Per View (%)',
+       labels={'country':'Country', 'avg_comments_ratio':'Percentage of Comments per View (%)'},
+       title = 'Avg Comments by View',
        text_auto = True)
    fig3.update_layout(title_x = 0.5)
 #    country_ag3 = pd.read_sql("SELECT * FROM country_ag", con = engine)

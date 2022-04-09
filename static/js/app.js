@@ -111,7 +111,7 @@ function getData(data) {
   }];
   console.log("marker:",color_code)
 
-  //Layout 
+  Layout 
   var layout = {
     autosize: false,
     title: "Top 10 Channels",
@@ -154,7 +154,7 @@ d3.json("/mj2").then(function(bob) {
     }];
     var layout = {
       autosize: false,
-      title: "Top Channels by Most Trending Days",
+      title: "Top Categories by Most Trending Days",
       titlefont: { size:25 },
       width: 500,
       height: 500,
@@ -165,13 +165,13 @@ d3.json("/mj2").then(function(bob) {
             automargin: true,
             titlefont: { size:20 },
           },
-      yaxis: {
+        yaxis: {
         title: 'Total Number of Days Trending',
         automargin: true,
         titlefont: { size:20 },
       },
     };
   
-  Plotly.newPlot("bar2", trace1, layout)
+  Plotly.newPlot("bar2", trace1,layout)
 
-})
+ })
