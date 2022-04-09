@@ -111,7 +111,6 @@ function getData(data) {
   }];
   console.log("marker:",color_code)
 
-  Layout 
   var layout = {
     autosize: false,
     title: "Top 10 Channels",
