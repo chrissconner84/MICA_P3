@@ -16,9 +16,10 @@ engine = create_engine(connection_string)
 all_df = pd.read_sql("Select * from all_data limit 10", con=engine)
 # usa_df= pd.read_sql("Select * from us_data", con=engine)
 # Use flask_pymongo to set up mongo connection
-app.config["MONGO_URI"] = "mongodb://localhost:27017/scrape_youtube"
-mongo = PyMongo(app)
+# app.config["MONGO_URI"] = "mongodb://localhost:27017/scrape_youtube"
+# mongo = PyMongo(app)
 # test_dict={"key","value"}
+
 @app.route("/")
 def index():
         countries=engine.execute("SELECT DISTINCT COUNTRY FROM all_data")
@@ -30,13 +31,13 @@ def index():
         rets=(all_countries_df.to_json(orient='records'))
         ccodes=(all_cat_df.to_json(orient='records'))
         # trending_videos=scrape_youtube.scrape();
-        trending_videos = mongo.db.trending_videos.find_one();
+        #trending_videos = mongo.db.trending_videos.find_one();
         #print(trending_videos)
-        if not trending_videos:
+        #if not trending_videos:
           #print(os.getcwd())
-          with open("trending_videos.json", 'r', encoding='UTF-8') as f:
-            trending_videos= json.load(f)
-            print(trending_videos)
+        with open("trending_videos.json", 'r', encoding='UTF-8') as f:
+                trending_videos= json.load(f)
+            #print(trending_videos)
         
                
         return render_template("index.html",countries=all_countries,all_cat_codes=all_cat_codes,rets=rets,ccodes=ccodes,trending_videos=trending_videos)
@@ -66,7 +67,7 @@ def testing():
         jsonStr = json.dumps(countries_likes_dislikes_view_count_json)
         #res = [{k:v for k, v in row.items()} for i, row in countries_likes_dislikes_view_count_df.iterrows()]
 
-        print(countries_likes_dislikes_view_count_df)
+        #print(countries_likes_dislikes_view_count_df)
         return  jsonStr
 
 
@@ -115,9 +116,9 @@ def scraper():
   #Get the videos by calling the scrape function
     trending_videos_data = scrape_youtube.scrape()
     #Get access to trending videos table on mongo db
-    trending_videos = mongo.db.trending_videos
+    #trending_videos = mongo.db.trending_videos
     #Update the table and save to data base
-    trending_videos.update_one({}, {"$set": trending_videos_data}, upsert=True)
+    #trending_videos.update_one({}, {"$set": trending_videos_data}, upsert=True)
     #print(trending_videos_data["trends"][0])
     # reload the root route
     return redirect("/", code=302)
@@ -136,7 +137,7 @@ def country_numbers():
         # countries_numbers_jsonStr = json.dumps(countries_numbers_json)
         #res = [{k:v for k, v in row.items()} for i, row in countries_likes_dislikes_view_count_df.iterrows()]
 
-        print(countries_geo_json_jsonStr)
+        #print(countries_geo_json_jsonStr)
         return  countries_geo_json_jsonStr
 
 @app.route("/cat_code")
@@ -268,46 +269,71 @@ def notdash():
 @app.route("/user_eng2")
 def user_eng2():
       
-      #START OF GRAPH 1
-   grouped_country_unique_norm = pd.read_sql('SELECT * FROM grouped_country_unique_norm;', con = engine)
-   fig1 = px.bar(grouped_country_unique_norm, 
-          x = 'country', 
-          y = 'view_count',
+   #START OF GRAPH 1
+   unique_data_grouped_country = pd.read_sql('SELECT country, AVG(view_count) AS avg_view_count, AVG(likes_ratio) AS avg_likes_ratio, AVG(comments_ratio) AS avg_comments_ratio, AVG(engagement_score) AS avg_engagment_score FROM unique_data GROUP BY country;', con = engine)
+   #country_ag = pd.read_sql("SELECT * FROM country_ag", con = engine)
+   #country_ag_df = country_ag['view_count'].median()
+   fig1 = px.bar(unique_data_grouped_country,
+          x = 'country',
+          y = 'avg_view_count',
           color = 'country',
-          labels= {'country':'Country', 'view_count':'Total Views on Final Trending Date'},
-          title="Views By Country",
+          labels={'country':'Country', 'avg_view_count':'Avg Views Amount of Views on Final Trending Date'},
+          title="Avg Views By Country",
           text_auto = True)
    fig1.update_layout(title_x = 0.5)     
 
    #START OF GRAPH 2
-   fig2 = px.bar(grouped_country_unique_norm, 
-          x = 'country', 
-          y = 'likes_ratio',
-          color = 'country',
-          labels = {'country':'Country', 'likes_ratio':'% Likes per View'},
-          title = "Likes By Country",
-          text_auto = True)
-   fig2.update_layout(title_x = 0.5)
-
+   #country_ag2 = pd.read_sql("SELECT * FROM country_ag", con = engine)
+   #country_ag2 = unique_data.groupby('country')['likes_ratio'].median().reset_index()
+   fig2 = px.bar(unique_data_grouped_country,
+           x = 'country', 
+           y = 'avg_likes_ratio',
+           color = 'country',
+           labels={'country':'Country', 'avg_likes_ratio':'Percentage of Likes per View (%)'},
+           title="Avg Likes By Country",
+           text_auto = True)
+        #    height = 700)
+   fig2.update_layout(title_x = 0.5) 
+#    fig2 = px.bar(country_ag2,
+#        x = country_ag2['country'],
+#        y = country_ag2['likes_ratio'],
+#        color = 'country',
+#        labels={'country':'Country',
+#                      'likes_ratio':'Likes Ratio (%)'}
+#        )
    #START OF GRAPH 3      
-   fig3 = px.bar(grouped_country_unique_norm, 
-          x = 'country', 
-          y = 'comments_ratio',
-          color = 'country',
-          labels= {'country':'Country', 'comments_ratio':'% Comments per View'},
-          title = 'Comments by Country',
-          text_auto = True)
+   fig3 = px.bar(unique_data_grouped_country, 
+       x = 'country', 
+       y = 'avg_comments_ratio',
+       color = 'country',
+       labels={'country':'Country', 'avg_comments_ratio':'Percentage of Comments per View (%)'},
+       title = 'Avg Comments by View',
+       text_auto = True)
    fig3.update_layout(title_x = 0.5)
+#    country_ag3 = pd.read_sql("SELECT * FROM country_ag", con = engine)
+#    fig3 = px.bar(country_ag3,
+#        x = country_ag3['country'],
+#        y = country_ag3['comment_count'],
+#        color = 'country',
+#        labels={'country':'Country',
+#                      'comment_count':'Comments Ratio(%)'})
 
    # START of GRAPH 4 
-   fig4 = px.bar(grouped_country_unique_norm, 
-          x = 'country', 
-          y = 'engagement_score', 
-          color = 'country',
-          labels= {'country':'Country', 'engagement_score':'Engagement Score'},
-          title = 'Engagement Score',
-          text_auto = True)
-   fig4.update_layout(title_x = 0.5)  
+   fig4 = px.bar(unique_data_grouped_country, 
+       x = 'country', 
+       y = 'avg_engagment_score', 
+       color = 'country',
+       labels={'country':'Country', 'avg_engagment_score':'Engagement Score: 50% comments / 49% likes / 1% views'},
+       title = 'Engagement Score',
+       text_auto = True)
+   fig4.update_layout(title_x = 0.5)     
+#    country_ag4 = pd.read_sql("SELECT * FROM country_ag", con = engine)
+#    fig4 = px.bar(country_ag4,
+#        x = 'country',
+#        y = 'engagement_score',
+#        color = 'country',
+#        labels ={'country':'Country',
+#                      'engagement_score':'Engagement Score (%)'}) 
 
    graphJSON1 = json.dumps(fig1, cls=plotly.utils.PlotlyJSONEncoder)
    graphJSON2 = json.dumps(fig2, cls=plotly.utils.PlotlyJSONEncoder)
