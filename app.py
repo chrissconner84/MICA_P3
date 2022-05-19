@@ -1,13 +1,16 @@
 from flask import Flask, render_template, redirect, jsonify, url_for
-
+import config
 from sqlalchemy import create_engine
-from config import db_password, db_user, db_name, endpoint
+from config import db_password, db_user, db_name, endpoint, gkey
 from flask_pymongo import PyMongo
 import pandas as pd
 import json, os
 import scrape_youtube
 import plotly.express as px
 import plotly
+import requests
+import json
+
 
 app = Flask(__name__)
 
@@ -22,25 +25,34 @@ all_df = pd.read_sql("Select * from all_data limit 10", con=engine)
 
 @app.route("/")
 def index():
-        countries=engine.execute("SELECT DISTINCT COUNTRY FROM all_data")
-        cat_codes=engine.execute("SELECT DISTINCT CAT_CODES FROM all_data")
-        all_countries = [row.country for row in countries]
-        all_cat_codes = [row.cat_codes for row in cat_codes]
-        all_countries_df=pd.DataFrame(all_countries)
-        all_cat_df=pd.DataFrame(all_cat_codes)
-        rets=(all_countries_df.to_json(orient='records'))
-        ccodes=(all_cat_df.to_json(orient='records'))
+        # countries=engine.execute("SELECT DISTINCT COUNTRY FROM all_data")
+        # cat_codes=engine.execute("SELECT DISTINCT CAT_CODES FROM all_data")
+        # all_countries = [row.country for row in countries]
+        # all_cat_codes = [row.cat_codes for row in cat_codes]
+        # all_countries_df=pd.DataFrame(all_countries)
+        # all_cat_df=pd.DataFrame(all_cat_codes)
+        # rets=(all_countries_df.to_json(orient='records'))
+        # ccodes=(all_cat_df.to_json(orient='records'))
         # trending_videos=scrape_youtube.scrape();
         #trending_videos = mongo.db.trending_videos.find_one();
         #print(trending_videos)
         #if not trending_videos:
           #print(os.getcwd())
+        base_url = "https://www.googleapis.com/youtube/v3/videos?part=snippet&chart=mostPopular&maxResults=20&key="+gkey
+        # run a request using our params dictionary
+        response = requests.get(base_url)
+        # print the response url, avoid doing for public github repos in order to avoid exposing key
+        print(response.url)
+        # convert response to json
+        trending_videos = response.json()
+
         with open("trending_videos.json", 'r', encoding='UTF-8') as f:
-                trending_videos= json.load(f)
+                 trending_videos= json.load(f)
             #print(trending_videos)
         
                
-        return render_template("index.html",countries=all_countries,all_cat_codes=all_cat_codes,rets=rets,ccodes=ccodes,trending_videos=trending_videos)
+        #return render_template("index.html",countries=all_countries,all_cat_codes=all_cat_codes,rets=rets,ccodes=ccodes,trending_videos=trending_videos)
+        return render_template("index.html",trending_videos=trending_videos)
  
 @app.route("/world_map")
 def worldmap():
@@ -114,14 +126,24 @@ def get_countries():
 
 def scraper():
   #Get the videos by calling the scrape function
-    trending_videos_data = scrape_youtube.scrape()
+  base_url = "https://www.googleapis.com/youtube/v3/videos?part=snippet&chart=mostPopular&maxResults=20&key="+gkey
+# run a request using our params dictionary
+  response = requests.get(base_url)
+  # print the response url, avoid doing for public github repos in order to avoid exposing key
+  print(response.url)
+  # convert response to json
+  places_data = response.json()
+
+    # Print the name and address of the first restaurant that appears
+    #print(places_data["items"][0]["snippet"]["title"])
+  trending_videos_data = scrape_youtube.scrape()
     #Get access to trending videos table on mongo db
     #trending_videos = mongo.db.trending_videos
     #Update the table and save to data base
     #trending_videos.update_one({}, {"$set": trending_videos_data}, upsert=True)
     #print(trending_videos_data["trends"][0])
     # reload the root route
-    return redirect("/", code=302)
+  return redirect("/", code=302)
 
 @app.route("/wm_fill")
 def country_numbers():
