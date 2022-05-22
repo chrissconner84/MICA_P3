@@ -67,7 +67,20 @@ def user():
       
        return render_template("user_eng.html")
 
+@app.route("/nn_model")
+def nnmodel():
+      
+       return render_template("nn_model.html")
 
+@app.route("/mike_model")
+def mikemodel():
+      
+       return render_template("mike_model.html")
+
+@app.route("/abby_model")
+def abbymodel():
+      
+       return render_template("abby_model.html")       
 
 @app.route("/testing")
 def testing():
