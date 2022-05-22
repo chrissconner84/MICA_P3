@@ -1,11 +1,11 @@
 from flask import Flask, render_template, redirect, jsonify, url_for
 import config
 from sqlalchemy import create_engine
-from config import db_password, db_user, db_name, endpoint, gkey
-from flask_pymongo import PyMongo
+from config import db_password, db_user, db_name, endpoint #gkey
+#from flask_pymongo import PyMongo
 import pandas as pd
-import json, os
-import scrape_youtube
+#import json, os
+#import scrape_youtube
 import plotly.express as px
 import plotly
 import requests
@@ -38,21 +38,21 @@ def index():
         #print(trending_videos)
         #if not trending_videos:
           #print(os.getcwd())
-        base_url = "https://www.googleapis.com/youtube/v3/videos?part=snippet&chart=mostPopular&maxResults=20&key="+gkey
+        #base_url = "https://www.googleapis.com/youtube/v3/videos?part=snippet&chart=mostPopular&maxResults=20&key="+gkey
         # run a request using our params dictionary
-        response = requests.get(base_url)
+        #response = requests.get(base_url)
         # print the response url, avoid doing for public github repos in order to avoid exposing key
-        print(response.url)
+        #print(response.url)
         # convert response to json
-        trending_videos = response.json()
+        #trending_videos = response.json()
 
-        with open("trending_videos.json", 'r', encoding='UTF-8') as f:
-                 trending_videos= json.load(f)
+        #with open("trending_videos.json", 'r', encoding='UTF-8') as f:
+        #         trending_videos= json.load(f)
             #print(trending_videos)
         
                
         #return render_template("index.html",countries=all_countries,all_cat_codes=all_cat_codes,rets=rets,ccodes=ccodes,trending_videos=trending_videos)
-        return render_template("index.html",trending_videos=trending_videos)
+        return render_template("index.html")
  
 @app.route("/world_map")
 def worldmap():
@@ -122,28 +122,7 @@ def get_countries():
     # json=jsonify({"countries":all_countries})
     #return countries_json
 
-@app.route("/scrape")
 
-def scraper():
-  #Get the videos by calling the scrape function
-  base_url = "https://www.googleapis.com/youtube/v3/videos?part=snippet&chart=mostPopular&maxResults=20&key="+gkey
-# run a request using our params dictionary
-  response = requests.get(base_url)
-  # print the response url, avoid doing for public github repos in order to avoid exposing key
-  print(response.url)
-  # convert response to json
-  places_data = response.json()
-
-    # Print the name and address of the first restaurant that appears
-    #print(places_data["items"][0]["snippet"]["title"])
-  trending_videos_data = scrape_youtube.scrape()
-    #Get access to trending videos table on mongo db
-    #trending_videos = mongo.db.trending_videos
-    #Update the table and save to data base
-    #trending_videos.update_one({}, {"$set": trending_videos_data}, upsert=True)
-    #print(trending_videos_data["trends"][0])
-    # reload the root route
-  return redirect("/", code=302)
 
 @app.route("/wm_fill")
 def country_numbers():
