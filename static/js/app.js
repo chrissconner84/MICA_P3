@@ -75,7 +75,7 @@ d3.json("/mj").then(function(bob) {
     // plot_bgcolor: '#c7c7c7'
   };
   // Init plot
-  Plotly.newPlot("bar1", trace1, layout)
+  // Plotly.newPlot("bar1", trace1, layout)
 // Wait for another input sselection and call getData 
   d3.selectAll("#selDataset1").on("change", function () {
     getData(bob)});
@@ -171,6 +171,6 @@ d3.json("/mj2").then(function(bob) {
       },
     };
   
-  Plotly.newPlot("bar2", trace1,layout)
+  // Plotly.newPlot("bar2", trace1,layout)
 
  })

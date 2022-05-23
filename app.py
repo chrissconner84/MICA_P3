@@ -1,5 +1,6 @@
-from flask import Flask, render_template, redirect, jsonify, url_for
+from flask import Flask, render_template, redirect, jsonify, url_for, request
 import config
+import flask
 from sqlalchemy import create_engine
 from config import db_password, db_user, db_name, endpoint #gkey
 #from flask_pymongo import PyMongo
@@ -7,9 +8,28 @@ import pandas as pd
 #import json, os
 #import scrape_youtube
 import plotly.express as px
-import plotly
+import joblib
 import requests
 import json
+import tensorflow as tf
+import keras
+from keras.models import load_model
+import json
+from json import JSONEncoder
+import numpy as np
+import json
+import urllib.request
+import os
+from os import environ
+
+
+class NumpyArrayEncoder(JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, numpy.ndarray):
+            return obj.tolist()
+        return JSONEncoder.default(self, obj)
+nn_model = load_model('model.h5')
+print ('NN Model loaded')
 
 
 app = Flask(__name__)
@@ -67,10 +87,36 @@ def user():
       
        return render_template("user_eng.html")
 
-@app.route("/nn_model")
+@app.route("/nn_model",methods=['GET', 'POST'])
 def nnmodel():
-      
-       return render_template("nn_model.html")
+    if request.method == 'POST':
+        print(request)
+        # Need to add ssome checking of arguments
+        category_e = request.form['category_e']
+        publish_to_trend = request.form['publish_to_trend']
+        publish_day_num = request.form['publish_day_num']
+        pt_views = request.form['pt_views']
+        pt_likes = request.form['pt_likes']
+        pt_dislikes = request.form['pt_dislikes']
+        pt_comments = request.form['pt_comments']
+        likes_ratio = request.form['likes_ratio']
+        comments_ratio = request.form['comments_ratio']
+        data=[[int(category_e), int(publish_to_trend), int(publish_day_num), int(pt_views), int(pt_likes),int(pt_dislikes), int(pt_comments), float(likes_ratio), float(comments_ratio)]]
+#        data=[[int(category_e), int(publish_to_trend), 0,0 ,0,0,0,0,0]]
+        scaler = joblib.load('./scaler.pkl')
+#        load the columns usinf pickle format
+        columns = joblib.load ('./model_columns.pkl')
+#  This line will fill any missing column with a 0.  Care should be taken that
+# won't affect your output
+        x=pd.DataFrame(data)
+        x.columns = [columns]
+        print(x)
+        test_input_scaled = scaler.transform(x)
+        test_target_hat=nn_model.predict(test_input_scaled)
+        test_target_hat[test_target_hat > 0.5] = 1
+        test_target_hat[test_target_hat <= 0.5] = 0
+        return render_template('nn_model.html', pred=str(test_target_hat))
+    return render_template('nn_model.html')
 
 @app.route("/mike_model")
 def mikemodel():
