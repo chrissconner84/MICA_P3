@@ -28,7 +28,7 @@ class NumpyArrayEncoder(JSONEncoder):
         if isinstance(obj, numpy.ndarray):
             return obj.tolist()
         return JSONEncoder.default(self, obj)
-nn_model = load_model('model.h5')
+nn_model = load_model('model_nn.h5')
 print ('NN Model loaded')
 
 
@@ -99,13 +99,13 @@ def nnmodel():
         pt_likes = request.form['pt_likes']
         pt_dislikes = request.form['pt_dislikes']
         pt_comments = request.form['pt_comments']
-        likes_ratio = request.form['likes_ratio']
-        comments_ratio = request.form['comments_ratio']
-        data=[[int(category_e), int(publish_to_trend), int(publish_day_num), int(pt_views), int(pt_likes),int(pt_dislikes), int(pt_comments), float(likes_ratio), float(comments_ratio)]]
+        # likes_ratio = request.form['likes_ratio']
+        # comments_ratio = request.form['comments_ratio']
+        data=[[int(category_e), int(publish_to_trend), int(publish_day_num), int(pt_views), int(pt_likes),int(pt_dislikes), int(pt_comments)]]
 #        data=[[int(category_e), int(publish_to_trend), 0,0 ,0,0,0,0,0]]
-        scaler = joblib.load('./scaler.pkl')
+        scaler = joblib.load('./scaler_nn.pkl')
 #        load the columns usinf pickle format
-        columns = joblib.load ('./model_columns.pkl')
+        columns = joblib.load ('./model_columns_nn.pkl')
 #  This line will fill any missing column with a 0.  Care should be taken that
 # won't affect your output
         x=pd.DataFrame(data)
