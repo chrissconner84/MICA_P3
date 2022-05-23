@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% block title %}User Engagement{% endblock %}
+
+{%block content%}
+<head>
+  <script src="./static/js/app_user2.js"></script>
+</head>
+
+<body>
+  <div class="container">
+  <div class="row">
+    <h1>Plotly Visualizations</h1>
+  </div>
+   
+  <div class="container">
+    <div class="row">  
+     <div class="col-md-12">
+        
+      </div>
+    </div> 
+    <div class="row">
+      <div class="col-md-6">    
+        <h1>Views by Country</h1>
+  <div id='chart1' class='chart' width="600" height="400"></div>
+  <script type='text/javascript'>
+    var graphs = {{graphJSON1 | safe}};
+    Plotly.plot('chart1',graphs,{});
+  </script>
+      </div>    
+      <div class="col-md-6">    
+        <h1>Likes Ratio by Country</h1>
+  <div id='chart2' class='chart' width="600" height="400"></div>
+  <script type='text/javascript'>
+    var graphs = {{graphJSON2 | safe}};
+    Plotly.plot('chart2',graphs,{});
+  </script>
+      </div>
+    </div>  <br> <br>
+      <div class="row">
+       <div class="col-md-6">    
+          <h1>Comments Ratio by Country</h1>
+        <div id='chart3' class='chart' width="600" height="400"></div>
+        <script type='text/javascript'>
+          var graphs = {{graphJSON3 | safe}};
+          Plotly.plot('chart3',graphs,{});
+        </script>
+        </div> 
+        <div class="col-md-6">
+          <h1>Engagement Score by Country</h1>
+    <div id='chart4' class='chart' width="600" height="400"></div>
+    <script type='text/javascript'>
+      var graphs = {{graphJSON4 | safe}};
+      Plotly.plot('chart4',graphs,{});
+    </script>
+        </div>      
+      </div> 
+</div>         
+     
+    
+  
+  {%endblock%}   
+  
+    
+
+
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  <script src="https://d3js.org/d3.v5.min.js"></script>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <script src="./static/js/app.js"></script>
+  
+
+</body>
+</html>

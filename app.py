@@ -8,6 +8,7 @@ import pandas as pd
 #import json, os
 #import scrape_youtube
 import plotly.express as px
+import plotly
 import joblib
 import requests
 import json
@@ -73,7 +74,54 @@ def index():
                
         #return render_template("index.html",countries=all_countries,all_cat_codes=all_cat_codes,rets=rets,ccodes=ccodes,trending_videos=trending_videos)
         return render_template("index.html")
- 
+@app.route("/mike_page2")
+def mikepage2():
+      return render_template("mike_page2.html")
+#    #START OF GRAPH 1
+#    unique_data_grouped_country = pd.read_sql('SELECT country, AVG(view_count) AS avg_view_count, AVG(likes_ratio) AS avg_likes_ratio, AVG(comments_ratio) AS avg_comments_ratio, AVG(engagement_score) AS avg_engagment_score FROM unique_data GROUP BY country;', con = engine)
+#    #country_ag = pd.read_sql("SELECT * FROM country_ag", con = engine)
+#    #country_ag_df = country_ag['view_count'].median()
+#    fig1 = px.bar(unique_data_grouped_country,
+#           x = 'country',
+#           y = 'avg_view_count',
+#           color = 'country',
+#           labels={'country':'Country', 'avg_view_count':'Avg Views Amount of Views on Final Trending Date'},
+#           title="Avg Views By Country",
+#           text_auto = True)
+#    fig1.update_layout(title_x = 0.5)     
+
+#    #START OF GRAPH 2
+#    #country_ag2 = pd.read_sql("SELECT * FROM country_ag", con = engine)
+#    #country_ag2 = unique_data.groupby('country')['likes_ratio'].median().reset_index()
+#    fig2 = px.bar(unique_data_grouped_country,
+#            x = 'country', 
+#            y = 'avg_likes_ratio',
+#            color = 'country',
+#            labels={'country':'Country', 'avg_likes_ratio':'Percentage of Likes per View (%)'},
+#            title="Avg Likes By Country",
+#            text_auto = True)
+#         #    height = 700)
+#    fig2.update_layout(title_x = 0.5) 
+# #    fig2 = px.bar(country_ag2,
+# #        x = country_ag2['country'],
+# #        y = country_ag2['likes_ratio'],
+# #        color = 'country',
+# #        labels={'country':'Country',
+# #                      'likes_ratio':'Likes Ratio (%)'}
+# #        )
+#    #START OF GRAPH 3      
+#    fig3 = px.bar(unique_data_grouped_country, 
+#        x = 'country', 
+#        y = 'avg_comments_ratio',
+#        color = 'country',
+#        labels={'country':'Country', 'avg_comments_ratio':'Percentage of Comments per View (%)'},
+#        title = 'Avg Comments by View',
+#        text_auto = True)
+#    fig3.update_layout(title_x = 0.5)
+#      graphJSON1 = json.dumps(fig1, cls=plotly.utils.PlotlyJSONEncoder)
+#      graphJSON2 = json.dumps(fig2, cls=plotly.utils.PlotlyJSONEncoder)
+#      graphJSON3 = json.dumps(fig3, cls=plotly.utils.PlotlyJSONEncoder)
+
 @app.route("/world_map")
 def worldmap():
         countries=engine.execute("SELECT DISTINCT COUNTRY FROM all_data")
@@ -115,6 +163,11 @@ def nnmodel():
         test_target_hat=nn_model.predict(test_input_scaled)
         test_target_hat[test_target_hat > 0.5] = 1
         test_target_hat[test_target_hat <= 0.5] = 0
+        if test_target_hat== 1:
+            prediction ='It will trend for 4 or more days'
+        else:
+            prediction ='It will trend for less than 4 days'           
+        return render_template("nn_model.html", pred=prediction)
         return render_template('nn_model.html', pred=str(test_target_hat))
     return render_template('nn_model.html')
 

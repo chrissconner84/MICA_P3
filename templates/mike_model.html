@@ -6,73 +6,94 @@
 
 
 <body>
-	<div class="container">
-		<h3>KNN Prediction Model Input Form</h3>
-	<form action="/result" method="POST">
-		<label for="cat">Category</label>
-		<select id="category_e" name="category_e">
-			<option value="0">Autos & Vehicles</option>
-			<option value="1">Comedy</option>
-			<option value="2">Education</option>
-			<option value="3">Entertainment</option>
-			<option value="4">Film & Animation</option>
-			<option value="5">Gaming</option>
-			<option value="6">Howto & Style</option>
-			<option value="7">Music</option>
-			<option value="8">Music</option>
-			<option value="9">News & Politics</option>
-			<option value="10">Nonprofits & Activism</option>
-			<option value="11">People & Blogs</option>
-			<option value="12">Pets & Animals</option>
-			<option value="13">Science & Technology</option>
-			<option value="14">Sports</option>
-			<option value="16">All categories</option>
-		</select>
-		<br>
-		<br>
-		<label for="pub to trend days">Publish to Trend Days</label>
-		<input type="text" id="publish_to_trend" name="publish_to_trend">btw:[0-99999]
-		<br>
-		<br>
-		<label for="pub day of week">Publish Day of Week</label>
-		<select id="publish_day_num" name="publish_day_num">
-		<option value="0">Any</option>
-		<option value="1">Sunday</option>
-		<option value="2">Monday</option>
-		<option value="3">Tuesday</option>
-		<option value="4">Wednesday</option>
-		<option value="5">Thursday</option>
-		<option value="6">Friday</option>
-		<option value="2">Saturday</option>
-		</select>
-		<br>
-		<br>
-		<label for="views">Pre-Trending Views Range</label>
-		<input type="text" id="pt_views" name="pt_views">btw:[0-99999]
-		<br>
-		<br>
-		<label for="likes">Pre-Trending Likes Range</label>
-		<input type="text" id="pt_likes" name="pt_likes">btw:[0-99999]
-		<br>
-		<br>
-		<label for="dislikes">Pre-Trending Dislikes Range</label>
-		<input type="text" id="pt_dislikes" name="pt_dislikes">btw:[0-99999]
-		<br>
-		<br>
-		<label for="comments">Pre-Trending Comments Range</label>
-		<input type="text" id="pt_comments" name="pt_comments">btw:[0-99999]
-		<br>
-		<br>
-		<label for="likes ratio">Pre-Trending Likes Ratio Range</label>
-		<input type="text" id="likes_ratio" name="likes_ratio">btw:[0-99999]
-		<br>
-		<br>
-		<label for="comments ratio">Pre-Trending Comments Ratio Range</label>
-		<input type="text" id="comments_ratio" name="comments_ratio">btw:[0-99999]
-		<br>
-		<br>
-		<input type="submit" value="Submit">
-	</form>
+	<div class="container-fluid">
+		<h3>Neural Networks Prediction Model Input Form</h3>
+		<div class="row">
+			<div class="col-md-6"> 
+<form method=post enctype=multipart/form-data>
+	<label for="category_e">Category</label>
+	<select id="category_e" name="category_e">
+		<option value="1">Film & Animation</option>
+		<option value="2">Autos & Vehicles</option>
+		<option value="10">Music</option>
+		<option value="15">Pets & Animals</option>
+		<option value="17">Sports</option>
+		<option value="18">Short Movies</option>
+		<option value="19">Trave and Events</option>
+		<option value="20">Gaming</option>
+		<option value="21">Videoblogging</option>
+		<option value="22">People and Blogs</option>
+		<option value="23">Comedy</option>
+		<option value="24">Entertainment</option>
+		<option value="25">News & Politics</option>
+		<option value="26">Howto & Style</option>
+		<option value="27">Film & Animation</option>
+		<option value="28">Education</option>
+		<option value="29">Film & Animation</option>
+		<option value="30">Science & Technology</option>
+		<option value="31">Anime/Animation</option>
+		<option value="32">Action/Adventure</option>
+		<option value="33">Classics</option>
+		<option value="34">Comedy</option>
+		<option value="35">Documentary</option>
+		<option value="36">Drama</option>
+		<option value="37">Family</option>
+		<option value="38">Foreign</option>
+		<option value="39">Horror</option>
+		<option value="40">Sci-Fi/Fantasy</option>
+		<option value="41">Thriller</option>
+		<option value="42">Shorts</option>
+		<option value="43">Shows</option>
+		<option value="44">Trailers</option>
+	</select>
+	<br>
+	<br>
+	<label for="publish_to_trend">publish to trend days </label>
+	<input type=number id="publish_to_trend" name="publish_to_trend" min="0" max="60">btw:[0-44]
+	<br>
+	<br>
+	<label for="publish_day_num">Day of week it was published</label>
+	<select id="publish_day_num" name="publish_day_num">
+	<option value="0">Monday</option>
+	<option value="1">Tuesday</option>
+	<option value="2">Wednesday</option>
+	<option value="3">Thursday</option>
+	<option value="4">Friday</option>
+	<option value="5">Saturday</option>
+	<option value="6">Sunday</option>
+	</select>
+	<br>
+	<br>
+	<label for="pt_views">Total views up to trending </label>
+	<input type=number id="pt_views" name="pt_views" min="0" max="1000000">[btw:1 - 1,000,000]
+	<br>
+	<br>
+	<label for="pt_likes">Total likes up to trending </label>
+	<input type=number id="pt_likes" name="pt_likes" min="0" max="1000000">[btw:1 - 1,000,000]
+	<br>
+	<br>
+	<label for="pt_dislikes">Total dislikes up to trending </label>
+	<input type=number id="pt_dislikes" name="pt_dislikes" min="0" max="1000000">[btw:1 - 1,000,000]
+	<br>
+	<br>
+	<label for="pt_comments">Total comments up to trending </label>
+	<input type=number id="pt_comments" name="pt_comments" min="0" max="1000000">[btw:1 - 1,000,000]
+	<br>
+	<br>
+	<input type="submit" value="Submit">
+	<br>
+	<br>
+	My prediction: {{ pred }}
+</form>
+</div>
+<div class="col-md-6"> 
+<img src="C:\Users\cconn\DataClass\MICA_P3\images\download.png" alt="Mike png">
+<br>
+<img src="C:\Users\cconn\DataClass\MICA_P3\images\download.png" alt="Mike png">
+<br>
+<img src="C:\Users\cconn\DataClass\MICA_P3\images\download.png" alt="Mike png">
+</div>
+</div>
 </div>
 </body>
 {%endblock%}
