@@ -5,30 +5,21 @@ from sqlalchemy import create_engine
 from config import db_password, db_user, db_name, endpoint #gkey
 #from flask_pymongo import PyMongo
 import pandas as pd
-#import json, os
+import json, os
 #import scrape_youtube
 import plotly.express as px
 import plotly
 import joblib
 import requests
-import json
 import tensorflow as tf
 import keras
 from keras.models import load_model
-import json
-from json import JSONEncoder
 import numpy as np
-import json
 import urllib.request
 import os
 from os import environ
 
 
-class NumpyArrayEncoder(JSONEncoder):
-    def default(self, obj):
-        if isinstance(obj, numpy.ndarray):
-            return obj.tolist()
-        return JSONEncoder.default(self, obj)
 nn_model = load_model('model_nn.h5')
 print ('NN Model loaded')
 
@@ -147,9 +138,10 @@ def nnmodel():
         pt_likes = request.form['pt_likes']
         pt_dislikes = request.form['pt_dislikes']
         pt_comments = request.form['pt_comments']
-        # likes_ratio = request.form['likes_ratio']
-        # comments_ratio = request.form['comments_ratio']
-        data=[[int(category_e), int(publish_to_trend), int(publish_day_num), int(pt_views), int(pt_likes),int(pt_dislikes), int(pt_comments)]]
+        try:
+            data=[[int(category_e), int(publish_to_trend), int(publish_day_num), int(pt_views), int(pt_likes),int(pt_dislikes), int(pt_comments)]]
+        except ValueError:
+            return render_template ('nn_model.html', pred=str("N/A [Incorrect Parameters, Please resubmit the form]"))
 #        data=[[int(category_e), int(publish_to_trend), 0,0 ,0,0,0,0,0]]
         scaler = joblib.load('./scaler_nn.pkl')
 #        load the columns usinf pickle format
@@ -168,7 +160,7 @@ def nnmodel():
         else:
             prediction ='It will trend for less than 4 days'           
         return render_template("nn_model.html", pred=prediction)
-        return render_template('nn_model.html', pred=str(test_target_hat))
+        # return render_template('nn_model.html', pred=str(test_target_hat))
     return render_template('nn_model.html')
 
 @app.route("/mike_model")
