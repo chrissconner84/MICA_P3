@@ -22,6 +22,8 @@ from os import environ
 
 nn_model = load_model('model_nn.h5')
 print ('NN Model loaded')
+knn_model = joblib.load("model.pkl") # Load "model.pkl"
+print ('KNN Model loaded')
 
 
 app = Flask(__name__)
@@ -37,34 +39,31 @@ engine = create_engine(connection_string)
 
 @app.route("/")
 def index():
-        # countries=engine.execute("SELECT DISTINCT COUNTRY FROM all_data")
-        # cat_codes=engine.execute("SELECT DISTINCT CAT_CODES FROM all_data")
-        # all_countries = [row.country for row in countries]
-        # all_cat_codes = [row.cat_codes for row in cat_codes]
-        # all_countries_df=pd.DataFrame(all_countries)
-        # all_cat_df=pd.DataFrame(all_cat_codes)
-        # rets=(all_countries_df.to_json(orient='records'))
-        # ccodes=(all_cat_df.to_json(orient='records'))
-        # trending_videos=scrape_youtube.scrape();
-        #trending_videos = mongo.db.trending_videos.find_one();
-        #print(trending_videos)
-        #if not trending_videos:
-          #print(os.getcwd())
-        #base_url = "https://www.googleapis.com/youtube/v3/videos?part=snippet&chart=mostPopular&maxResults=20&key="+gkey
-        # run a request using our params dictionary
-        #response = requests.get(base_url)
-        # print the response url, avoid doing for public github repos in order to avoid exposing key
-        #print(response.url)
-        # convert response to json
-        #trending_videos = response.json()
-
-        #with open("trending_videos.json", 'r', encoding='UTF-8') as f:
-        #         trending_videos= json.load(f)
-            #print(trending_videos)
+    #Top Chart on notdash.html   
+   final_unique = pd.read_sql('SELECT * FROM final_unique;', con = engine).reset_index(drop=True)
+   
+   fig5 = px.histogram(final_unique,
+                   x = 'trend_days',
+                   nbins = 37,
+                   histfunc = 'count',
+                   color = 'target',
+                   text_auto=True,
+                   animation_frame='category'
+                  )
+   fig5.update_layout(
+            bargap=0.1,
+            xaxis_title='Trending Days',
+            yaxis_title="Amount of Videos",
+            title={
+                'text' : 'Count of Trending Days',
+                'x':0.5,
+                'xanchor': 'center'
+            })
+   graphJSON5 = json.dumps(fig5, cls=plotly.utils.PlotlyJSONEncoder)
+   return render_template('index.html', graphJSON5=graphJSON5)
         
-               
-        #return render_template("index.html",countries=all_countries,all_cat_codes=all_cat_codes,rets=rets,ccodes=ccodes,trending_videos=trending_videos)
-        return render_template("index.html")
+   
+
 @app.route("/mike_page2")
 def mikepage2():
       return render_template("mike_page2.html")
@@ -163,10 +162,44 @@ def nnmodel():
         # return render_template('nn_model.html', pred=str(test_target_hat))
     return render_template('nn_model.html')
 
-@app.route("/mike_model")
+@app.route("/mike_model",methods=['GET', 'POST'])
 def mikemodel():
+
+    if request.method == 'POST':
+        print(request)
+        # Need to add ssome checking of arguments
+        category_e = request.form['category_e']
+        publish_to_trend = request.form['publish_to_trend']
+        publish_day_num = request.form['publish_day_num']
+        pt_views = request.form['pt_views']
+        pt_likes = request.form['pt_likes']
+        pt_dislikes = request.form['pt_dislikes']
+        pt_comments = request.form['pt_comments']
+        try:
+            data=[[int(category_e), int(publish_to_trend), int(publish_day_num), int(pt_views), int(pt_likes),int(pt_dislikes), int(pt_comments)]]
+        except ValueError:
+            return render_template ('mike_model.html', pred=str("N/A [Incorrect Parameters, Please resubmit the form]"))
+#        data=[[int(category_e), int(publish_to_trend), 0,0 ,0,0,0,0,0]]
+        scaler = joblib.load('./knn_scaler.pkl')
+#        load the columns usinf pickle format
+        columns = joblib.load ('./knn_model_columns.pkl')
+#  This line will fill any missing column with a 0.  Care should be taken that
+# won't affect your output
+        x=pd.DataFrame(data)
+        x.columns = [columns]
+        print(x)
+        test_input_scaled = scaler.transform(x)
+        test_target_hat=knn_model.predict(test_input_scaled)
+        test_target_hat[test_target_hat > 0.5] = 1
+        test_target_hat[test_target_hat <= 0.5] = 0
+        if test_target_hat== 1:
+            prediction ='It will trend for 4 or more days'
+        else:
+            prediction ='It will trend for less than 4 days'           
+        return render_template("mike_model.html", pred=prediction)
+        # return render_template('nn_model.html', pred=str(test_target_hat))
+    return render_template('mike_model.html')      
       
-       return render_template("mike_model.html")
 
 @app.route("/abby_model")
 def abbymodel():
