@@ -30,17 +30,13 @@ app = Flask(__name__)
 
 connection_string = f"postgresql://{db_user}:{db_password}@{endpoint}:5432/{db_name}"
 engine = create_engine(connection_string)
-#all_df = pd.read_sql("Select * from all_data limit 10", con=engine)
-# usa_df= pd.read_sql("Select * from us_data", con=engine)
-# Use flask_pymongo to set up mongo connection
-# app.config["MONGO_URI"] = "mongodb://localhost:27017/scrape_youtube"
-# mongo = PyMongo(app)
-# test_dict={"key","value"}
+final_unique = pd.read_sql('SELECT * FROM final_unique;', con = engine).reset_index(drop=True)
+
 
 @app.route("/")
 def index():
     #Top Chart on notdash.html   
-   final_unique = pd.read_sql('SELECT * FROM final_unique;', con = engine).reset_index(drop=True)
+#    final_unique = pd.read_sql('SELECT * FROM final_unique;', con = engine).reset_index(drop=True)
    
    fig5 = px.histogram(final_unique,
                    x = 'trend_days',
@@ -66,48 +62,27 @@ def index():
 
 @app.route("/mike_page2")
 def mikepage2():
-      return render_template("mike_page2.html")
+      
 #    #START OF GRAPH 1
-#    unique_data_grouped_country = pd.read_sql('SELECT country, AVG(view_count) AS avg_view_count, AVG(likes_ratio) AS avg_likes_ratio, AVG(comments_ratio) AS avg_comments_ratio, AVG(engagement_score) AS avg_engagment_score FROM unique_data GROUP BY country;', con = engine)
-#    #country_ag = pd.read_sql("SELECT * FROM country_ag", con = engine)
-#    #country_ag_df = country_ag['view_count'].median()
-#    fig1 = px.bar(unique_data_grouped_country,
-#           x = 'country',
-#           y = 'avg_view_count',
-#           color = 'country',
-#           labels={'country':'Country', 'avg_view_count':'Avg Views Amount of Views on Final Trending Date'},
-#           title="Avg Views By Country",
-#           text_auto = True)
-#    fig1.update_layout(title_x = 0.5)     
-
+    final_model_scaled = pd.read_sql('SELECT * FROM final_model_scaled;', con = engine).reset_index(drop=True)
+    fig8 = px.parallel_coordinates(final_model_scaled.drop(columns=['index', 'category_e', 'publish_day_num']),
+                                                      color = 'target',
+                                                      labels={'publish_to_trend':'Days Between Publish & Trend',
+                                                              'pt_views':'Views',
+                                                              'pt_likes':'Likes',
+                                                              'pt_dislikes': 'Dislikes',
+                                                              'pt_comments': 'Comments'
+                                                             },
+                                                       color_continuous_scale=px.colors.diverging.Tealrose,
+                                                       color_continuous_midpoint=.5)  
+    graphJSON8 = json.dumps(fig8, cls=plotly.utils.PlotlyJSONEncoder)
+    # print (graphJSON8)
+    return render_template('mike_page2.html', graphJSON8=graphJSON8)
 #    #START OF GRAPH 2
-#    #country_ag2 = pd.read_sql("SELECT * FROM country_ag", con = engine)
-#    #country_ag2 = unique_data.groupby('country')['likes_ratio'].median().reset_index()
-#    fig2 = px.bar(unique_data_grouped_country,
-#            x = 'country', 
-#            y = 'avg_likes_ratio',
-#            color = 'country',
-#            labels={'country':'Country', 'avg_likes_ratio':'Percentage of Likes per View (%)'},
-#            title="Avg Likes By Country",
-#            text_auto = True)
-#         #    height = 700)
-#    fig2.update_layout(title_x = 0.5) 
-# #    fig2 = px.bar(country_ag2,
-# #        x = country_ag2['country'],
-# #        y = country_ag2['likes_ratio'],
-# #        color = 'country',
-# #        labels={'country':'Country',
-# #                      'likes_ratio':'Likes Ratio (%)'}
-# #        )
+
 #    #START OF GRAPH 3      
-#    fig3 = px.bar(unique_data_grouped_country, 
-#        x = 'country', 
-#        y = 'avg_comments_ratio',
-#        color = 'country',
-#        labels={'country':'Country', 'avg_comments_ratio':'Percentage of Comments per View (%)'},
-#        title = 'Avg Comments by View',
-#        text_auto = True)
-#    fig3.update_layout(title_x = 0.5)
+
+
 #      graphJSON1 = json.dumps(fig1, cls=plotly.utils.PlotlyJSONEncoder)
 #      graphJSON2 = json.dumps(fig2, cls=plotly.utils.PlotlyJSONEncoder)
 #      graphJSON3 = json.dumps(fig3, cls=plotly.utils.PlotlyJSONEncoder)
