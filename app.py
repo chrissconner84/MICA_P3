@@ -173,6 +173,11 @@ def abbymodel():
       
        return render_template("abby_model.html")       
 
+@app.route("/word_cloud")
+def wordcloud():
+      
+       return render_template("word_cloud.html")
+
 @app.route("/testing")
 def testing():
         #Run query
