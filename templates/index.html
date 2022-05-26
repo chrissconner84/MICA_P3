@@ -9,34 +9,36 @@
     <div class="jumbotron">
       <h1 class="display-4">Youtube Trending Videos</h1>
       <p class="lead">Nisi quis consectetur excepteur cillum dolor minim.</p>
-  </div>
+    </div>
   
   <div class="container">
     <div class="row">
       <div class="col-md-12">    
         <h1>Dataset</h1>
-  <div id='chart1' class='chart' width="800" height="600"></div>
-  <script type='text/javascript'>
-    var graphs = {{graphJSON5 | safe}};
-    Plotly.plot('chart1',graphs,{});
-  </script>
+        <div id='chart1' class='chart' width="800" height="600"></div>
+        <script type='text/javascript'>
+        var graphs = {{graphJSON5 | safe}};
+        Plotly.plot('chart1',graphs,{});
+        </script>
       </div>  
-    
-      <!-- <div class="col-md-4"> 
-
-        <h3>Total Days Trending</h3>
-        
-          <div id="bar1"></div>
-      </div>       
-      <div class="col-md-4"> 
-        <h3>Total Views</h3>
-          <div id="bar2"></div>
-      
-      </div> -->
-      
-  </div>    
-  
-
+    </div>
+    <div class="row">
+      <div class="col-md-6">  
+      <div id='chart2' class='chart' width="800" height="600"></div>
+      <script type='text/javascript'>
+      var graphs = {{graphJSON6 | safe}};
+      Plotly.plot('chart2',graphs,{});
+      </script>
+      </div>
+      <div class="col-md-6">  
+      <div id='chart3' class='chart' width="800" height="600"></div>
+      <script type='text/javascript'>
+      var graphs = {{graphJSON7 | safe}};
+      Plotly.plot('chart3',graphs,{});
+      </script>
+      </div>
+    </div>
+</div>    
 </body>
 {%endblock%}
 </htmt>

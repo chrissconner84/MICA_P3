@@ -31,6 +31,7 @@ app = Flask(__name__)
 connection_string = f"postgresql://{db_user}:{db_password}@{endpoint}:5432/{db_name}"
 engine = create_engine(connection_string)
 final_unique = pd.read_sql('SELECT * FROM final_unique;', con = engine).reset_index(drop=True)
+final_model_scaled = pd.read_sql('SELECT * FROM final_model_scaled;', con = engine).reset_index(drop=True)
 
 
 @app.route("/")
@@ -55,8 +56,27 @@ def index():
                 'x':0.5,
                 'xanchor': 'center'
             })
+
+#    fig6 = px.bar_polar(
+#                     r = bar_polar_group.iloc[2].values,
+#                     theta = bar_polar_group.columns,
+#                     title="CATEGORY - %s"%bar_polar_group.index[2],
+#                     range_r = [0,1.0],
+#                     color_discrete_sequence=px.colors.diverging.Tealrose,
+#                     template='plotly_dark'
+#                     )
+#    fig7 = px.bar_polar(
+#                     r = bar_polar_group.iloc[2].values,
+#                     theta = bar_polar_group.columns,
+#                     title="CATEGORY - %s"%bar_polar_group.index[2],
+#                     range_r = [0,1.0],
+#                     color_discrete_sequence=px.colors.diverging.Tealrose,
+#                     template='plotly_dark'
+                    # )                         
    graphJSON5 = json.dumps(fig5, cls=plotly.utils.PlotlyJSONEncoder)
-   return render_template('index.html', graphJSON5=graphJSON5)
+#    graphJSON6 = json.dumps(fig6, cls=plotly.utils.PlotlyJSONEncoder)
+#    graphJSON7 = json.dumps(fig7, cls=plotly.utils.PlotlyJSONEncoder)
+   return render_template('index.html', graphJSON5=graphJSON5)#,graphJSON6=graphJSON6,graphJSON7=graphJSON7)
         
    
 
@@ -64,7 +84,7 @@ def index():
 def mikepage2():
       
 #    #START OF GRAPH 1
-    final_model_scaled = pd.read_sql('SELECT * FROM final_model_scaled;', con = engine).reset_index(drop=True)
+    #final_model_scaled = pd.read_sql('SELECT * FROM final_model_scaled;', con = engine).reset_index(drop=True)
     fig8 = px.parallel_coordinates(final_model_scaled.drop(columns=['index', 'category_e', 'publish_day_num']),
                                                       color = 'target',
                                                       labels={'publish_to_trend':'Days Between Publish & Trend',
@@ -76,16 +96,29 @@ def mikepage2():
                                                        color_continuous_scale=px.colors.diverging.Tealrose,
                                                        color_continuous_midpoint=.5)  
     graphJSON8 = json.dumps(fig8, cls=plotly.utils.PlotlyJSONEncoder)
-    # print (graphJSON8)
-    return render_template('mike_page2.html', graphJSON8=graphJSON8)
+    
 #    #START OF GRAPH 2
+#     fig9 = px.bar_polar(
+#                     r = bar_polar_group.iloc[2].values,
+#                     theta = bar_polar_group.columns,
+#                     title="CATEGORY - %s"%bar_polar_group.index[2],
+#                     range_r = [0,1.0],
+#                     color_discrete_sequence=px.colors.diverging.Tealrose,
+#                     template='plotly_dark'
+#                     )
+#     graphJSON9 = json.dumps(fig9, cls=plotly.utils.PlotlyJSONEncoder)                
 
-#    #START OF GRAPH 3      
-
-
-#      graphJSON1 = json.dumps(fig1, cls=plotly.utils.PlotlyJSONEncoder)
-#      graphJSON2 = json.dumps(fig2, cls=plotly.utils.PlotlyJSONEncoder)
-#      graphJSON3 = json.dumps(fig3, cls=plotly.utils.PlotlyJSONEncoder)
+# #    #START OF GRAPH 3      
+#     fig10 = px.bar_polar(
+#                     r = bar_polar_group.iloc[2].values,
+#                     theta = bar_polar_group.columns,
+#                     title="CATEGORY - %s"%bar_polar_group.index[2],
+#                     range_r = [0,1.0],
+#                     color_discrete_sequence=px.colors.diverging.Tealrose,
+#                     template='plotly_dark'
+#                     )
+#     graphJSON10 = json.dumps(fig10, cls=plotly.utils.PlotlyJSONEncoder)
+    return render_template('mike_page2.html', graphJSON8=graphJSON8)#,graphJSON9=graphJSON9,graphJSON10=graphJSON10)
 
 @app.route("/world_map")
 def worldmap():
