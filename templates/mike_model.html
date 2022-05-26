@@ -6,7 +6,7 @@
 
 
 <body>
-	<div class="container-fluid">
+	<div class="container">
 		<h3>KNN Prediction Model Input Form</h3>
 		<div class="row">
 			<div class="col-md-6"> 
@@ -49,7 +49,7 @@
 	<br>
 	<br>
 	<label for="publish_to_trend">publish to trend days </label>
-	<input type=number id="publish_to_trend" name="publish_to_trend" min="0" max="60">btw:[0-44]
+	<input type=number id="publish_to_trend" name="publish_to_trend" min="0" max="37">between:[0-37]
 	<br>
 	<br>
 	<label for="publish_day_num">Day of week it was published</label>
@@ -65,37 +65,50 @@
 	<br>
 	<br>
 	<label for="pt_views">Total views up to trending </label>
-	<input type=number id="pt_views" name="pt_views" min="0" max="1000000">[btw:1 - 1,000,000]
+	<input type=number id="pt_views" name="pt_views" min="1" max="121643032">[between:1 - 121,643,032]
 	<br>
 	<br>
 	<label for="pt_likes">Total likes up to trending </label>
-	<input type=number id="pt_likes" name="pt_likes" min="0" max="1000000">[btw:1 - 1,000,000]
+	<input type=number id="pt_likes" name="pt_likes" min="1" max="7110071">[between:1 - 7,110,071]
 	<br>
 	<br>
 	<label for="pt_dislikes">Total dislikes up to trending </label>
-	<input type=number id="pt_dislikes" name="pt_dislikes" min="0" max="1000000">[btw:1 - 1,000,000]
+	<input type=number id="pt_dislikes" name="pt_dislikes" min="1" max="3979409">[between:1 - 3,979,409]
 	<br>
 	<br>
 	<label for="pt_comments">Total comments up to trending </label>
-	<input type=number id="pt_comments" name="pt_comments" min="0" max="1000000">[btw:1 - 1,000,000]
+	<input type=number id="pt_comments" name="pt_comments" min="1" max="3400267">[between:1 - 3,400,267]
 	<br>
 	<br>
 	<input type="submit" value="Submit">
 	<br>
 	<br>
-	My prediction: {{ pred }}
+	Neural Network model prediction: <FONT COLOR="RED">{{ pred }} </FONT>
 </form>
 </div>
 <div class="col-md-6"> 
-<img src="./static/knn_roc_curve.png" alt="Mike png">
+<img src="./static/knn_roc_curve.png" alt="Mike png" width="500" height="500">
 <br>
-<img src="./static/knn_conf_matrix1.png" alt="Mike png">
+</div>
+</div>
+<div class="row">
+<div class="col-md-6">	
+<img src="./static/knn_conf_matrix1.png" alt="Mike png" width="500" height="500">
 <br>
-<img src="./static/knn_conf_matrix2.png" alt="Mike png">
+</div>
+<div class="col-md-6">
+<img src="./static/knn_conf_matrix2.png" alt="Mike png" width="500" height="500">
 <br>
-<img src="./static/knn_ks_plot.png" alt="Mike png">
+</div>
+</div>
+<div class="row">
+<div class="col-md-6">
+<img src="./static/knn_ks_plot.png" alt="Mike png" width="500" height="500">
 <br>
-<img src="./static/knn_learning_curve.png" alt="Mike png">
+</div>
+<div class="col-md-6">
+<img src="./static/knn_learning_curve.png" alt="Mike png" width="500" height="500">
+<br>
 </div>
 </div>
 </div>
