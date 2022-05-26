@@ -106,16 +106,17 @@ def mikepage2():
     graphJSON9 = json.dumps(fig9, cls=plotly.utils.PlotlyJSONEncoder)                
 
 # #    #START OF GRAPH 3      
-#     fig10 = px.bar_polar(
-#                     r = bar_polar_group.iloc[2].values,
-#                     theta = bar_polar_group.columns,
-#                     title="CATEGORY - %s"%bar_polar_group.index[2],
-#                     range_r = [0,1.0],
-#                     color_discrete_sequence=px.colors.diverging.Tealrose,
-#                     template='plotly_dark'
-#                     )
-#     graphJSON10 = json.dumps(fig10, cls=plotly.utils.PlotlyJSONEncoder)
-    return render_template('mike_page2.html', graphJSON8=graphJSON8,graphJSON9=graphJSON9)#,graphJSON10=graphJSON10)
+    fig10 = px.line_polar(df8,
+                     r=[92,88,77,27,20],
+                     theta=['pt_views','pt_likes','pt_dislikes','pt_comments','publish_to_trend'],
+                     range_r = [0,100],
+                     title="FEATURE IMPORTANCE  < 4",
+                     template='ggplot2',
+                     line_close=True
+                    )
+    fig10.update_traces(fill='toself')
+    graphJSON10 = json.dumps(fig10, cls=plotly.utils.PlotlyJSONEncoder)
+    return render_template('mike_page2.html', graphJSON8=graphJSON8,graphJSON9=graphJSON9,graphJSON10=graphJSON10)
 
 @app.route("/world_map")
 def worldmap():

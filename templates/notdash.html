@@ -4,13 +4,13 @@
 {%block content%}
 <body>
   
-    <h1>What are the top channels?</h1>
+    <h3>What are the top channels?</h3>
     <div id='chart' class='chart'></div>
     <script type='text/javascript'>
       var graphs = {{graphJSON | safe}};
       Plotly.plot('chart',graphs,{});
     </script>
-    <h1>What are the top categories?</h1>
+    <h3>What are the top categories?</h3>
     <div id='chart9' class='chart'></div>
     <script type='text/javascript'>
       var graphs = {{graphJSON1 | safe}};

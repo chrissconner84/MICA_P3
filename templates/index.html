@@ -7,14 +7,19 @@
   <script src="./static/js/app.js"></script>
   <div class="container">
     <div class="jumbotron">
-      <h1 class="display-4">Youtube Trending Videos</h1>
-      <p class="lead">Nisi quis consectetur excepteur cillum dolor minim.</p>
+      <h3>Youtube Trending Videos</h3>
+      <p class="lead">For this analysis, we are looking at a Kaggle dataset of Youtube videos. Here are some facts about our data:</p>
+      <ul class="list-group">
+        <li class="list-group-item">11 countries</li>
+        <li class="list-group-item">Over 1.3 million Youtube videos</li>
+        <li class="list-group-item">13 different categories</li>
+        </ul>	
     </div>
   
   <div class="container">
     <div class="row">
       <div class="col-md-12">    
-        <h1>Dataset</h1>
+        <h3>Dataset by category</h3>
         <div id='chart1' class='chart' width="800" height="600"></div>
         <script type='text/javascript'>
         var graphs = {{graphJSON5 | safe}};
