@@ -98,15 +98,12 @@ def mikepage2():
     graphJSON8 = json.dumps(fig8, cls=plotly.utils.PlotlyJSONEncoder)
     
 #    #START OF GRAPH 2
-#     fig9 = px.bar_polar(
-#                     r = bar_polar_group.iloc[2].values,
-#                     theta = bar_polar_group.columns,
-#                     title="CATEGORY - %s"%bar_polar_group.index[2],
-#                     range_r = [0,1.0],
-#                     color_discrete_sequence=px.colors.diverging.Tealrose,
-#                     template='plotly_dark'
-#                     )
-#     graphJSON9 = json.dumps(fig9, cls=plotly.utils.PlotlyJSONEncoder)                
+    fig9 = px.parallel_categories(final_unique[['category', 'target', 'publish_day']],
+                             labels={'category':'Category',
+                                     'target':'TARGET',
+                                     'publish_day':'Day of Week Published'}
+                            )
+    graphJSON9 = json.dumps(fig9, cls=plotly.utils.PlotlyJSONEncoder)                
 
 # #    #START OF GRAPH 3      
 #     fig10 = px.bar_polar(
@@ -118,7 +115,7 @@ def mikepage2():
 #                     template='plotly_dark'
 #                     )
 #     graphJSON10 = json.dumps(fig10, cls=plotly.utils.PlotlyJSONEncoder)
-    return render_template('mike_page2.html', graphJSON8=graphJSON8)#,graphJSON9=graphJSON9,graphJSON10=graphJSON10)
+    return render_template('mike_page2.html', graphJSON8=graphJSON8,graphJSON9=graphJSON9)#,graphJSON10=graphJSON10)
 
 @app.route("/world_map")
 def worldmap():
