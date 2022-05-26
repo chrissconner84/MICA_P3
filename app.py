@@ -52,31 +52,33 @@ def index():
             xaxis_title='Trending Days',
             yaxis_title="Amount of Videos",
             title={
-                'text' : 'Count of Trending Days',
+                'text' : 'Distribution by Category',
                 'x':0.5,
                 'xanchor': 'center'
             })
 
-#    fig6 = px.bar_polar(
-#                     r = bar_polar_group.iloc[2].values,
-#                     theta = bar_polar_group.columns,
-#                     title="CATEGORY - %s"%bar_polar_group.index[2],
-#                     range_r = [0,1.0],
-#                     color_discrete_sequence=px.colors.diverging.Tealrose,
-#                     template='plotly_dark'
-#                     )
-#    fig7 = px.bar_polar(
-#                     r = bar_polar_group.iloc[2].values,
-#                     theta = bar_polar_group.columns,
-#                     title="CATEGORY - %s"%bar_polar_group.index[2],
-#                     range_r = [0,1.0],
-#                     color_discrete_sequence=px.colors.diverging.Tealrose,
-#                     template='plotly_dark'
-                    # )                         
+   fig7 = px.line_polar(
+                     r=[100,31,60,6,40],
+                     theta=['pt_views','pt_likes','pt_dislikes','pt_comments','publish_to_trend'],
+                     range_r = [0,100],
+                     title="FEATURE IMPORTANCE > 4",
+                     template='plotly_dark',
+                     line_close=True
+                    )
+   fig7.update_traces(fill='toself')
+   fig6 = px.line_polar(
+                     r=[92,88,77,27,20],
+                     theta=['pt_views','pt_likes','pt_dislikes','pt_comments','publish_to_trend'],
+                     range_r = [0,100],
+                     title="FEATURE IMPORTANCE < 4",
+                     template='plotly_dark',
+                     line_close=True
+                    )
+   fig6.update_traces(fill='toself')                         
    graphJSON5 = json.dumps(fig5, cls=plotly.utils.PlotlyJSONEncoder)
-#    graphJSON6 = json.dumps(fig6, cls=plotly.utils.PlotlyJSONEncoder)
-#    graphJSON7 = json.dumps(fig7, cls=plotly.utils.PlotlyJSONEncoder)
-   return render_template('index.html', graphJSON5=graphJSON5)#,graphJSON6=graphJSON6,graphJSON7=graphJSON7)
+   graphJSON6 = json.dumps(fig6, cls=plotly.utils.PlotlyJSONEncoder)
+   graphJSON7 = json.dumps(fig7, cls=plotly.utils.PlotlyJSONEncoder)
+   return render_template('index.html', graphJSON5=graphJSON5,graphJSON6=graphJSON6,graphJSON7=graphJSON7)
         
    
 

@@ -9,36 +9,28 @@
 <body>
 <div class="container">
   <div class="row">
-   <h3>Features Visualizations</h3>
-    <div class="col-md-6">
-      <h4>Days Between Publish and Trend</h4>
-      <div id='chart8' class='chart' width="600" height="400"></div>
+   <h3>Model Features</h3>
+    <div class="col-md-12">
+      <h4>Numerical</h4>
+      <div id='chart8' class='chart' width="1200" height="800"></div>
       <script type='text/javascript'>
         var graphs = {{graphJSON8 | safe}};
         Plotly.plot('chart8',graphs,{});
       </script>   
     </div>
-    <div class="col-md-6">
-      <h4>Category to Day of Week</h4>
-      <div id='chart9' class='chart' width="600" height="400"></div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <h4>Categorical</h4>
+      <div id='chart9' class='chart' width="1200" height="800"></div>
       <script type='text/javascript'>
         var graphs = {{graphJSON9 | safe}};
         Plotly.plot('chart9',graphs,{});
       </script>   
-    </div>  
-  </div> 
-  <div class="row">
-    <div class="col-md-6">    
-      <h4>Feature Importance</h4>
-      <div id='chart10' class='chart' width="600" height="400"></div>
-      <script type='text/javascript'>
-        var graphs = {{graphJSON10 | safe}};
-        Plotly.plot('chart10',graphs,{});
-      </script>   
-    </div>    
-      
+    </div>
+  </div>  
   </div>
-</div> 
+ 
        
      
     
