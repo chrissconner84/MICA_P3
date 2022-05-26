@@ -106,7 +106,7 @@ def mikepage2():
     graphJSON9 = json.dumps(fig9, cls=plotly.utils.PlotlyJSONEncoder)                
 
 # #    #START OF GRAPH 3      
-    fig10 = px.line_polar(df8,
+    fig10 = px.line_polar(
                      r=[92,88,77,27,20],
                      theta=['pt_views','pt_likes','pt_dislikes','pt_comments','publish_to_trend'],
                      range_r = [0,100],
